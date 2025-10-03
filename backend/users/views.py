@@ -4,8 +4,9 @@ from django.contrib.auth import authenticate, login, get_user_model
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view, permission_classes
 
-from .serializers import ProfileUpdateSerializer, RegistrationSerializer, UserSerializer
+from .serializers import ProfileUpdateSerializer, RegistrationSerializer, UserSerializer, ChangePasswordSerializer
 
 
 User = get_user_model()
@@ -28,6 +29,35 @@ class MeView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(UserSerializer(request.user).data)
+    
+    def patch(self, request):
+        serializer = ProfileUpdateSerializer(instance=request.user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(UserSerializer(request.user).data)
+
+
+class ChangePasswordView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        
+        user = request.user
+        current_password = serializer.validated_data['current_password']
+        new_password = serializer.validated_data['new_password']
+        
+        if not user.check_password(current_password):
+            return Response(
+                {"detail": "Current password is incorrect"}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        user.set_password(new_password)
+        user.save()
+        
+        return Response({"detail": "Password changed successfully"})
 
 
 class AdminSessionLoginView(APIView):

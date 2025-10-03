@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse Reports</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-50">
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-4">Browse</h1>
+    <div class="flex flex-wrap gap-2 mb-4">
+      <select id="filterType" class="border rounded px-3 py-2">
+        <option value="">All</option>
+        <option value="lost">Lost</option>
+        <option value="found">Found</option>
+      </select>
+      <select id="filterCategory" class="border rounded px-3 py-2"></select>
+      <input id="filterQ" class="border rounded px-3 py-2" placeholder="Keywords" />
+      <button id="applyFilters" class="px-4 py-2 bg-blue-600 text-white rounded">Apply</button>
+    </div>
+    <div id="list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/reports.js"></script>
+</body>
+</html>
+
+

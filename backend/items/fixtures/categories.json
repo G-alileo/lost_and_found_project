@@ -1,0 +1,11 @@
+[
+  {"model": "items.category", "pk": 1, "fields": {"name": "Electronics", "created_by": null, "created_at": "2025-01-01T00:00:00Z"}},
+  {"model": "items.category", "pk": 2, "fields": {"name": "Clothing", "created_by": null, "created_at": "2025-01-01T00:00:00Z"}},
+  {"model": "items.category", "pk": 3, "fields": {"name": "Documents", "created_by": null, "created_at": "2025-01-01T00:00:00Z"}},
+  {"model": "items.category", "pk": 4, "fields": {"name": "Accessories", "created_by": null, "created_at": "2025-01-01T00:00:00Z"}},
+  {"model": "items.category", "pk": 5, "fields": {"name": "Keys", "created_by": null, "created_at": "2025-01-01T00:00:00Z"}},
+  {"model": "items.category", "pk": 6, "fields": {"name": "Stationery", "created_by": null, "created_at": "2025-01-01T00:00:00Z"}},
+  {"model": "items.category", "pk": 7, "fields": {"name": "Others", "created_by": null, "created_at": "2025-01-01T00:00:00Z"}}
+]
+
+

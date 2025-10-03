@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Lost & Found</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-50">
+  <header class="bg-white shadow">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="./index.html" class="text-xl font-semibold">Lost & Found</a>
+      <nav class="flex gap-4 text-sm">
+        <a href="./browse.html" class="hover:underline">Browse</a>
+        <a href="./report-lost.html" class="hover:underline">Report Lost</a>
+        <a href="./report-found.html" class="hover:underline">Report Found</a>
+        <a href="./user-dashboard.html" class="hover:underline">Dashboard</a>
+        <a href="./login.html" class="hover:underline">Login</a>
+        <a href="./register.html" class="hover:underline">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <section class="mb-8">
+      <h1 class="text-3xl font-bold mb-4">Find or Report Items</h1>
+      <div class="flex gap-2">
+        <input id="searchInput" type="text" placeholder="Search reports..." class="flex-1 border rounded px-3 py-2" />
+        <button id="searchBtn" class="px-4 py-2 bg-blue-600 text-white rounded">Search</button>
+      </div>
+    </section>
+    <section>
+      <h2 class="text-xl font-semibold mb-3">Recent Reports</h2>
+      <div id="recentReports" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </section>
+  </main>
+
+  <footer class="border-t py-6 text-center text-sm text-gray-500">© Campus Lost & Found</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/ui.js"></script>
+  <script>
+    document.getElementById('searchBtn').addEventListener('click', async () => {
+      const q = document.getElementById('searchInput').value.trim();
+      const data = await window.api.reports.list({ q });
+      renderReports(data.results || []);
+    });
+
+    async function loadRecent() {
+      const data = await window.api.reports.list({});
+      renderReports(data.results || []);
+    }
+
+    function renderReports(items) {
+      const container = document.getElementById('recentReports');
+      container.innerHTML = items.slice(0, 6).map(r => `
+        <a href="#" class="block bg-white rounded shadow p-4 hover:shadow-md">
+          <div class="text-sm text-gray-500">${r.report_type?.toUpperCase() || ''}</div>
+          <div class="font-semibold">${r.title}</div>
+          <div class="text-sm text-gray-600">${r.location || ''}</div>
+        </a>
+      `).join('');
+    }
+
+    loadRecent();
+  </script>
+</body>
+</html>
+
+

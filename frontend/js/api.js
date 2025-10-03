@@ -96,8 +96,18 @@
     return data;
   }
 
+  async function logout() {
+    try {
+      await instance.post("auth/logout/");
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      clearTokens();
+    }
+  }
+
   window.api = {
-    auth: { login, register, adminLogin },
+    auth: { login, register, adminLogin, logout },
     users: {
       async me() {
         const { data } = await instance.get("users/me/");
@@ -107,6 +117,16 @@
         const { data } = await instance.put("users/me/", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
+        return data;
+      },
+      async updateProfile(formData) {
+        const { data } = await instance.patch("users/me/", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        return data;
+      },
+      async changePassword(payload) {
+        const { data } = await instance.post("users/change-password/", payload);
         return data;
       },
     },

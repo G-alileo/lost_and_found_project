@@ -65,10 +65,72 @@
 
           <!-- User menu (hidden by default) -->
           <div id="userMenu" class="hidden relative">
-            <button class="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
-              <img id="userAvatar" class="w-8 h-8 rounded-full" src="" alt="">
+            <button id="userMenuButton" class="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white transition-colors duration-200">
+              <div id="userAvatarContainer" class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                <img id="userAvatar" class="w-8 h-8 rounded-full hidden" src="" alt="">
+                <svg id="defaultAvatar" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
               <span id="userName"></span>
+              <svg class="w-4 h-4 transition-transform duration-200" id="dropdownArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
             </button>
+
+            <!-- Dropdown Menu -->
+            <div id="userDropdown" class="hidden absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
+              <div class="py-2">
+                <!-- User Info Section -->
+                <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                  <div class="flex items-center space-x-3">
+                    <div id="dropdownAvatarContainer" class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                      <img id="dropdownAvatar" class="w-10 h-10 rounded-full hidden" src="" alt="">
+                      <svg id="dropdownDefaultAvatar" class="w-6 h-6 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <p id="dropdownUserName" class="text-sm font-medium text-gray-900 dark:text-white"></p>
+                      <p id="dropdownUserEmail" class="text-xs text-gray-500 dark:text-gray-400"></p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Menu Items -->
+                <div class="py-1">
+                  <button id="editProfileBtn" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    Edit Profile
+                  </button>
+                  
+                  <button id="changePasswordBtn" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                    Change Password
+                  </button>
+
+                  <a href="./user-dashboard.html" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    Dashboard
+                  </a>
+
+                  <div class="border-t border-gray-200 dark:border-gray-700 my-1"></div>
+
+                  <button id="logoutBtn" class="flex items-center w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                    </svg>
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -177,6 +239,7 @@
   <script src="../js/theme.js"></script>
   <script src="../js/api.js"></script>
   <script src="../js/ui.js"></script>
+  <script src="../js/user-dropdown.js"></script>
   <script>
     let currentPage = 1;
     let currentFilters = {};
@@ -200,6 +263,7 @@
     async function checkAuthStatus() {
       try {
         const user = await window.api.users.me();
+        window.currentUser = user; // Store globally for modals
         showUserMenu(user);
       } catch (error) {
         showAuthButtons();
@@ -211,8 +275,35 @@
       document.getElementById('authButtons').classList.add('hidden');
       document.getElementById('userMenu').classList.remove('hidden');
       document.getElementById('userName').textContent = user.username;
+      
+      // Update dropdown user info
+      document.getElementById('dropdownUserName').textContent = user.username;
+      document.getElementById('dropdownUserEmail').textContent = user.email || 'No email provided';
+      
+      // Handle main avatar
+      const userAvatar = document.getElementById('userAvatar');
+      const defaultAvatar = document.getElementById('defaultAvatar');
+      
+      // Handle dropdown avatar
+      const dropdownAvatar = document.getElementById('dropdownAvatar');
+      const dropdownDefaultAvatar = document.getElementById('dropdownDefaultAvatar');
+      
       if (user.avatar) {
-        document.getElementById('userAvatar').src = user.avatar;
+        // User has custom avatar
+        userAvatar.src = user.avatar;
+        userAvatar.classList.remove('hidden');
+        defaultAvatar.classList.add('hidden');
+        
+        dropdownAvatar.src = user.avatar;
+        dropdownAvatar.classList.remove('hidden');
+        dropdownDefaultAvatar.classList.add('hidden');
+      } else {
+        // Show default profile icon
+        userAvatar.classList.add('hidden');
+        defaultAvatar.classList.remove('hidden');
+        
+        dropdownAvatar.classList.add('hidden');
+        dropdownDefaultAvatar.classList.remove('hidden');
       }
     }
 

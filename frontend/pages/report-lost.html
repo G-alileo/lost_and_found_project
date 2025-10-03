@@ -3,30 +3,457 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Report Lost Item</title>
+  <title>Report Lost Item - CampusFound</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/tailwind.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            secondary: '#64748b'
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="min-h-screen bg-gray-50">
-  <main class="max-w-2xl mx-auto px-4 py-8">
-    <h1 class="text-2xl font-bold mb-6">Report Lost Item</h1>
-    <form id="reportForm" class="space-y-3">
-      <input id="title" class="w-full border rounded px-3 py-2" placeholder="Title" required />
-      <textarea id="description" class="w-full border rounded px-3 py-2" placeholder="Description" required></textarea>
-      <select id="category" class="w-full border rounded px-3 py-2"></select>
-      <input id="date" type="date" class="w-full border rounded px-3 py-2" required />
-      <input id="location" class="w-full border rounded px-3 py-2" placeholder="Location" required />
-      <input id="image" type="file" accept="image/*" class="w-full" />
-      <img id="preview" class="max-h-48 hidden" />
-      <button class="bg-blue-600 text-white px-4 py-2 rounded">Submit</button>
-    </form>
+<body class="min-h-screen transition-colors duration-300">
+  <!-- Header -->
+  <header class="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <div class="flex-shrink-0 flex items-center">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <a href="./index.html" class="text-xl font-bold text-gray-900 dark:text-white">CampusFound</a>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="hidden md:flex space-x-8">
+          <a href="./index.html" class="nav-link">Home</a>
+          <a href="./browse.html" class="nav-link">Browse Items</a>
+          <a href="./report-lost.html" class="text-blue-600 dark:text-blue-400 font-medium">Report Lost</a>
+          <a href="./report-found.html" class="nav-link">Report Found</a>
+        </nav>
+
+        <!-- Right side buttons -->
+        <div class="flex items-center space-x-4">
+          <!-- Theme toggle -->
+          <button id="themeToggle" class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+            <span class="theme-icon">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+              </svg>
+            </span>
+          </button>
+
+          <!-- Auth buttons -->
+          <div id="authButtons" class="flex items-center space-x-3">
+            <a href="./login.html" class="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400">
+              Sign In
+            </a>
+          </div>
+
+          <!-- User menu (hidden by default) -->
+          <div id="userMenu" class="hidden relative">
+            <button class="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+              <div id="userAvatarContainer" class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                <img id="userAvatar" class="w-8 h-8 rounded-full hidden" src="" alt="">
+                <svg id="defaultAvatar" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <span id="userName"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Page Header -->
+    <div class="mb-8">
+      <div class="flex items-center mb-4">
+        <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center mr-4">
+          <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Report Lost Item</h1>
+          <p class="text-gray-600 dark:text-gray-400">Help us help you find your lost belongings</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Container -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Item Details</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Please provide as much detail as possible to help others identify your item</p>
+      </div>
+
+      <form id="reportForm" class="p-6 space-y-6">
+        <!-- Title -->
+        <div class="form-group">
+          <label for="title" class="form-label">Item Title *</label>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            required
+            class="input-field w-full"
+            placeholder="e.g., Blue Nike Backpack, iPhone 13 Pro, Car Keys"
+          />
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Be specific about brand, color, and model if applicable</p>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label for="description" class="form-label">Description *</label>
+          <textarea
+            id="description"
+            name="description"
+            required
+            rows="4"
+            class="input-field w-full resize-none"
+            placeholder="Describe your item in detail. Include any distinguishing features, scratches, stickers, or unique characteristics..."
+          ></textarea>
+        </div>
+
+        <!-- Category and Date Row -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="form-group">
+            <label for="category" class="form-label">Category *</label>
+            <select id="category" name="category" required class="input-field w-full">
+              <option value="">Select a category</option>
+              <!-- Categories will be loaded dynamically -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="date" class="form-label">Date Lost *</label>
+            <input
+              id="date"
+              name="date"
+              type="date"
+              required
+              class="input-field w-full"
+            />
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="form-group">
+          <label for="location" class="form-label">Last Known Location *</label>
+          <input
+            id="location"
+            name="location"
+            type="text"
+            required
+            class="input-field w-full"
+            placeholder="e.g., Library 2nd Floor, Student Center Cafeteria, Parking Lot B"
+          />
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Be as specific as possible about where you last saw the item</p>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="form-group">
+          <label for="image" class="form-label">Upload Photo (Optional)</label>
+          <div class="mt-2">
+            <div id="dropZone" class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center hover:border-blue-500 dark:hover:border-blue-400 transition-colors cursor-pointer">
+              <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <div class="mt-4">
+                <label for="image" class="cursor-pointer">
+                  <span class="mt-2 block text-sm font-medium text-gray-900 dark:text-white">
+                    Click to upload or drag and drop
+                  </span>
+                  <span class="mt-1 block text-xs text-gray-500 dark:text-gray-400">
+                    PNG, JPG, GIF up to 10MB
+                  </span>
+                </label>
+                <input id="image" name="image" type="file" accept="image/*" class="sr-only" />
+              </div>
+            </div>
+          </div>
+          
+          <!-- Image Preview -->
+          <div id="imagePreview" class="hidden mt-4">
+            <img id="preview" class="max-h-48 rounded-lg border border-gray-200 dark:border-gray-600" />
+            <button type="button" id="removeImage" class="mt-2 text-sm text-red-600 hover:text-red-700 dark:text-red-400">
+              Remove image
+            </button>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="form-group">
+          <label for="contactInfo" class="form-label">Contact Information (Optional)</label>
+          <input
+            id="contactInfo"
+            name="contactInfo"
+            type="text"
+            class="input-field w-full"
+            placeholder="Phone number or email for direct contact"
+          />
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">This will be visible to other users who might have found your item</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="hidden bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 px-4 py-3 rounded-lg">
+          <div class="flex">
+            <svg class="w-5 h-5 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+            <span id="errorText"></span>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <a href="./index.html" class="btn-secondary">Cancel</a>
+          <button
+            type="submit"
+            id="submitBtn"
+            class="btn-primary inline-flex items-center"
+          >
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+            </svg>
+            <span id="submitBtnText">Submit Report</span>
+            <div id="submitSpinner" class="hidden ml-2">
+              <div class="spinner"></div>
+            </div>
+          </button>
+        </div>
+      </form>
+    </div>
   </main>
 
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
+      <p class="text-gray-500 dark:text-gray-400">&copy; 2024 CampusFound. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../js/theme.js"></script>
   <script src="../js/api.js"></script>
   <script src="../js/ui.js"></script>
-  <script src="../js/reports.js"></script>
   <script>
-    window.reportType = 'lost';
+    let currentUser = null;
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', async () => {
+      await checkAuthStatus();
+      await loadCategories();
+      setupImageUpload();
+      setupForm();
+    });
+
+    // Check authentication status
+    async function checkAuthStatus() {
+      try {
+        currentUser = await window.api.users.me();
+        showUserMenu(currentUser);
+      } catch (error) {
+        showAuthButtons();
+      }
+    }
+
+    // Show user menu when logged in
+    function showUserMenu(user) {
+      document.getElementById('authButtons').classList.add('hidden');
+      document.getElementById('userMenu').classList.remove('hidden');
+      document.getElementById('userName').textContent = user.username;
+      
+      const userAvatar = document.getElementById('userAvatar');
+      const defaultAvatar = document.getElementById('defaultAvatar');
+      
+      if (user.avatar) {
+        // User has custom avatar
+        userAvatar.src = user.avatar;
+        userAvatar.classList.remove('hidden');
+        defaultAvatar.classList.add('hidden');
+      } else {
+        // Show default profile icon
+        userAvatar.classList.add('hidden');
+        defaultAvatar.classList.remove('hidden');
+      }
+    }
+
+    // Show auth buttons when not logged in
+    function showAuthButtons() {
+      document.getElementById('authButtons').classList.remove('hidden');
+      document.getElementById('userMenu').classList.add('hidden');
+    }
+
+    // Load categories
+    async function loadCategories() {
+      try {
+        const data = await window.api.categories.list();
+        const select = document.getElementById('category');
+        
+        if (data.results) {
+          data.results.forEach(category => {
+            const option = document.createElement('option');
+            option.value = category.id;
+            option.textContent = category.name;
+            select.appendChild(option);
+          });
+        }
+      } catch (error) {
+        console.error('Failed to load categories:', error);
+      }
+    }
+
+    // Setup image upload
+    function setupImageUpload() {
+      const dropZone = document.getElementById('dropZone');
+      const imageInput = document.getElementById('image');
+      const preview = document.getElementById('preview');
+      const imagePreview = document.getElementById('imagePreview');
+      const removeBtn = document.getElementById('removeImage');
+
+      // Handle drag and drop
+      dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('border-blue-500', 'bg-blue-50', 'dark:bg-blue-900/20');
+      });
+
+      dropZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-blue-500', 'bg-blue-50', 'dark:bg-blue-900/20');
+      });
+
+      dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-blue-500', 'bg-blue-50', 'dark:bg-blue-900/20');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          handleImageFile(files[0]);
+        }
+      });
+
+      // Handle file input change
+      imageInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+          handleImageFile(e.target.files[0]);
+        }
+      });
+
+      // Remove image
+      removeBtn.addEventListener('click', () => {
+        imageInput.value = '';
+        imagePreview.classList.add('hidden');
+      });
+
+      function handleImageFile(file) {
+        if (file && file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            preview.src = e.target.result;
+            imagePreview.classList.remove('hidden');
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+
+    // Setup form submission
+    function setupForm() {
+      document.getElementById('reportForm').addEventListener('submit', handleSubmit);
+    }
+
+    // Handle form submission
+    async function handleSubmit(event) {
+      event.preventDefault();
+      
+      if (!currentUser) {
+        showError('Please log in to report a lost item');
+        return;
+      }
+
+      const formData = new FormData(event.target);
+      formData.append('report_type', 'lost');
+
+      setLoading(true);
+      hideError();
+
+      try {
+        await window.api.reports.create(formData);
+        
+        // Show success and redirect
+        window.showNotification('Lost item report submitted successfully!', 'success');
+        
+        setTimeout(() => {
+          window.location.href = './user-dashboard.html';
+        }, 1500);
+        
+      } catch (error) {
+        console.error('Failed to submit report:', error);
+        
+        if (error.response?.status === 401) {
+          showError('Please log in to submit a report');
+        } else if (error.response?.status === 400) {
+          showError('Please check all required fields and try again');
+        } else {
+          showError('Failed to submit report. Please try again later.');
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    // Show error message
+    function showError(message) {
+      const errorDiv = document.getElementById('errorMessage');
+      const errorText = document.getElementById('errorText');
+      
+      errorText.textContent = message;
+      errorDiv.classList.remove('hidden');
+    }
+
+    // Hide error message
+    function hideError() {
+      const errorDiv = document.getElementById('errorMessage');
+      errorDiv.classList.add('hidden');
+    }
+
+    // Set loading state
+    function setLoading(loading) {
+      const submitBtn = document.getElementById('submitBtn');
+      const submitBtnText = document.getElementById('submitBtnText');
+      const submitSpinner = document.getElementById('submitSpinner');
+      
+      if (loading) {
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+        submitBtnText.textContent = 'Submitting...';
+        submitSpinner.classList.remove('hidden');
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+        submitBtnText.textContent = 'Submit Report';
+        submitSpinner.classList.add('hidden');
+      }
+    }
   </script>
 </body>
 </html>

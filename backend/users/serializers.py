@@ -8,6 +8,9 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
+    avatar = serializers.ImageField(source='profile_picture', read_only=True)
+    bio = serializers.CharField(max_length=500, required=False, allow_blank=True)
+    
     class Meta:
         model = User
         fields = [
@@ -18,8 +21,10 @@ class UserSerializer(serializers.ModelSerializer):
             "last_name",
             "role",
             "profile_picture",
+            "avatar",
+            "bio",
         ]
-        read_only_fields = ["id", "username", "email", "role"]
+        read_only_fields = ["id", "role"]
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -38,8 +43,20 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 
 class ProfileUpdateSerializer(serializers.ModelSerializer):
+    avatar = serializers.ImageField(source='profile_picture', required=False)
+    bio = serializers.CharField(max_length=500, required=False, allow_blank=True)
+    
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "profile_picture"]
+        fields = ["username", "email", "first_name", "last_name", "profile_picture", "avatar", "bio"]
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    current_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True, min_length=8)
+    
+    def validate_new_password(self, value):
+        # Add password validation if needed
+        return value
 
 

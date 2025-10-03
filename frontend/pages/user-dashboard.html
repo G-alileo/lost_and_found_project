@@ -3,39 +3,529 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Dashboard</title>
+  <title>My Dashboard - CampusFound</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/tailwind.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            secondary: '#64748b'
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="min-h-screen bg-gray-50">
-  <main class="max-w-6xl mx-auto px-4 py-8">
-    <div class="flex items-center justify-between mb-6">
-      <h1 class="text-2xl font-bold">Dashboard</h1>
-      <div id="notifBell" class="relative">
-        <span class="px-3 py-1 bg-gray-200 rounded">Notifications <span id="unreadCount" class="text-white bg-red-600 rounded px-2">0</span></span>
+<body class="min-h-screen bg-gray-900 text-white">
+  <!-- Header -->
+  <header class="bg-gray-800 border-b border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo and Navigation -->
+        <div class="flex items-center space-x-8">
+          <div class="flex items-center">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <span class="text-xl font-bold text-white">CampusFound</span>
+          </div>
+          
+          <!-- Navigation Links -->
+          <nav class="hidden md:flex space-x-6">
+            <a href="./index.html" class="text-gray-300 hover:text-white transition-colors">Home</a>
+            <a href="./report-lost.html" class="text-gray-300 hover:text-white transition-colors">Report Item</a>
+            <a href="./browse.html" class="text-gray-300 hover:text-white transition-colors">Browse Items</a>
+          </nav>
+        </div>
+
+        <!-- Search and User Menu -->
+        <div class="flex items-center space-x-4">
+          <!-- Search -->
+          <div class="relative">
+            <input
+              type="text"
+              placeholder="Search..."
+              class="bg-gray-700 text-white placeholder-gray-400 rounded-lg px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <svg class="absolute right-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+
+          <!-- Notifications -->
+          <button class="relative p-2 text-gray-400 hover:text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h5v-5l-5 5z"></path>
+            </svg>
+            <span id="notificationBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+          </button>
+
+          <!-- User Profile -->
+          <div class="flex items-center space-x-3">
+            <img id="userAvatar" class="w-8 h-8 rounded-full bg-gray-600" src="" alt="User">
+            <span id="userName" class="text-white font-medium">Loading...</span>
+          </div>
+        </div>
       </div>
     </div>
+  </header>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <section class="lg:col-span-2 bg-white p-4 rounded shadow">
-        <h2 class="font-semibold mb-3">My Reports</h2>
-        <div id="myReports" class="space-y-2"></div>
-      </section>
-      <section class="bg-white p-4 rounded shadow">
-        <h2 class="font-semibold mb-3">Notifications</h2>
-        <div id="notifications" class="space-y-2"></div>
-      </section>
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Page Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-white mb-2">My Dashboard</h1>
+      <p class="text-gray-400">Manage your reports, matches, and notifications</p>
     </div>
 
-    <section class="mt-6 bg-white p-4 rounded shadow">
-      <h2 class="font-semibold mb-3">Matches</h2>
-      <div id="matches" class="space-y-2"></div>
-    </section>
+    <!-- Tab Navigation -->
+    <div class="mb-8">
+      <nav class="flex space-x-8 border-b border-gray-700">
+        <button
+          id="myReportsTab"
+          class="tab-button py-2 px-1 border-b-2 border-blue-500 text-blue-400 font-medium"
+          onclick="switchTab('myReports')"
+        >
+          My Reports
+        </button>
+        <button
+          id="matchesTab"
+          class="tab-button py-2 px-1 border-b-2 border-transparent text-gray-400 hover:text-gray-300 font-medium"
+          onclick="switchTab('matches')"
+        >
+          Matches
+        </button>
+        <button
+          id="notificationsTab"
+          class="tab-button py-2 px-1 border-b-2 border-transparent text-gray-400 hover:text-gray-300 font-medium"
+          onclick="switchTab('notifications')"
+        >
+          Notifications
+        </button>
+      </nav>
+    </div>
+
+    <!-- Tab Content -->
+    <div id="tabContent">
+      <!-- My Reports Tab -->
+      <div id="myReportsContent" class="tab-content">
+        <div class="bg-gray-800 rounded-lg overflow-hidden">
+          <!-- Table Header -->
+          <div class="px-6 py-4 border-b border-gray-700">
+            <h2 class="text-xl font-semibold text-white">My Reported Items</h2>
+          </div>
+
+          <!-- Table -->
+          <div class="overflow-x-auto">
+            <table class="data-table w-full">
+              <thead>
+                <tr class="bg-gray-700">
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Item</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Description</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Date Reported</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="reportsTableBody" class="bg-gray-800 divide-y divide-gray-700">
+                <!-- Loading state -->
+                <tr>
+                  <td colspan="5" class="px-6 py-8 text-center text-gray-400">
+                    <div class="flex items-center justify-center">
+                      <div class="spinner mr-3"></div>
+                      Loading your reports...
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Matches Tab -->
+      <div id="matchesContent" class="tab-content hidden">
+        <div class="bg-gray-800 rounded-lg overflow-hidden">
+          <div class="px-6 py-4 border-b border-gray-700">
+            <h2 class="text-xl font-semibold text-white">Potential Matches</h2>
+          </div>
+          <div id="matchesList" class="p-6">
+            <div class="text-center text-gray-400 py-8">
+              <div class="flex items-center justify-center">
+                <div class="spinner mr-3"></div>
+                Loading matches...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications Tab -->
+      <div id="notificationsContent" class="tab-content hidden">
+        <div class="bg-gray-800 rounded-lg overflow-hidden">
+          <div class="px-6 py-4 border-b border-gray-700">
+            <h2 class="text-xl font-semibold text-white">Recent Notifications</h2>
+          </div>
+          <div id="notificationsList" class="p-6">
+            <div class="text-center text-gray-400 py-8">
+              <div class="flex items-center justify-center">
+                <div class="spinner mr-3"></div>
+                Loading notifications...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
+  <!-- Footer -->
+  <footer class="bg-gray-800 border-t border-gray-700 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">About</h3>
+          <p class="text-gray-400 text-sm">CampusFound helps students recover lost items using AI-powered matching.</p>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Contact</h3>
+          <p class="text-gray-400 text-sm">support@campusfound.com</p>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Privacy Policy</h3>
+          <p class="text-gray-400 text-sm">Your privacy is important to us.</p>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+        <p class="text-gray-400">&copy;2024 CampusFound. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../js/theme.js"></script>
   <script src="../js/api.js"></script>
   <script src="../js/ui.js"></script>
-  <script src="../js/dashboard.js"></script>
+  <script>
+    let currentUser = null;
+
+    // Initialize dashboard
+    document.addEventListener('DOMContentLoaded', async () => {
+      await checkAuthAndLoadUser();
+      await loadDashboardData();
+    });
+
+    // Check authentication and load user data
+    async function checkAuthAndLoadUser() {
+      try {
+        currentUser = await window.api.users.me();
+        document.getElementById('userName').textContent = currentUser.username;
+        
+        if (currentUser.avatar) {
+          document.getElementById('userAvatar').src = currentUser.avatar;
+        }
+      } catch (error) {
+        console.error('Authentication failed:', error);
+        window.location.href = './login.html?redirect=' + encodeURIComponent(window.location.pathname);
+      }
+    }
+
+    // Load all dashboard data
+    async function loadDashboardData() {
+      await Promise.all([
+        loadMyReports(),
+        loadMatches(),
+        loadNotifications()
+      ]);
+    }
+
+    // Tab switching functionality
+    function switchTab(tabName) {
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.add('hidden');
+      });
+      
+      // Remove active state from all tabs
+      document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('border-blue-500', 'text-blue-400');
+        button.classList.add('border-transparent', 'text-gray-400');
+      });
+      
+      // Show selected tab content
+      document.getElementById(tabName + 'Content').classList.remove('hidden');
+      
+      // Add active state to selected tab
+      const activeTab = document.getElementById(tabName + 'Tab');
+      activeTab.classList.remove('border-transparent', 'text-gray-400');
+      activeTab.classList.add('border-blue-500', 'text-blue-400');
+    }
+
+    // Load user's reports
+    async function loadMyReports() {
+      try {
+        const data = await window.api.reports.list({ user: currentUser.id });
+        renderReportsTable(data.results || []);
+      } catch (error) {
+        console.error('Failed to load reports:', error);
+        showReportsError();
+      }
+    }
+
+    // Render reports table
+    function renderReportsTable(reports) {
+      const tbody = document.getElementById('reportsTableBody');
+      
+      if (reports.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="px-6 py-8 text-center text-gray-400">
+              <div class="text-center">
+                <svg class="w-12 h-12 mx-auto mb-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <p class="text-lg font-medium mb-2">No reports yet</p>
+                <p>Start by reporting a lost or found item.</p>
+                <a href="./report-lost.html" class="btn-primary mt-4 inline-block">Report Item</a>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = reports.map(report => `
+        <tr class="hover:bg-gray-700 transition-colors">
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 h-10 w-10">
+                ${report.image ? 
+                  `<img class="h-10 w-10 rounded-lg object-cover" src="${report.image}" alt="${report.title}">` :
+                  `<div class="h-10 w-10 rounded-lg bg-gray-600 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                  </div>`
+                }
+              </div>
+              <div class="ml-4">
+                <div class="text-sm font-medium text-white">${report.title}</div>
+                <div class="text-sm text-gray-400">${report.location || 'No location'}</div>
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4">
+            <div class="text-sm text-gray-300 max-w-xs truncate">${report.description || 'No description'}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+            ${new Date(report.created_at).toLocaleDateString()}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span class="badge-${report.report_type === 'lost' ? 'lost' : 'found'}">
+              ${report.report_type?.toUpperCase() || 'UNKNOWN'}
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+            <button onclick="viewReport('${report.id}')" class="text-blue-400 hover:text-blue-300 mr-3">View</button>
+            <button onclick="editReport('${report.id}')" class="text-green-400 hover:text-green-300 mr-3">Edit</button>
+            <button onclick="deleteReport('${report.id}')" class="text-red-400 hover:text-red-300">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Show reports error
+    function showReportsError() {
+      const tbody = document.getElementById('reportsTableBody');
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="5" class="px-6 py-8 text-center text-red-400">
+            <p>Failed to load reports. Please try again.</p>
+            <button onclick="loadMyReports()" class="btn-primary mt-4">Retry</button>
+          </td>
+        </tr>
+      `;
+    }
+
+    // Load matches
+    async function loadMatches() {
+      try {
+        const data = await window.api.matches.list();
+        renderMatches(data.results || []);
+      } catch (error) {
+        console.error('Failed to load matches:', error);
+        showMatchesError();
+      }
+    }
+
+    // Render matches
+    function renderMatches(matches) {
+      const container = document.getElementById('matchesList');
+      
+      if (matches.length === 0) {
+        container.innerHTML = `
+          <div class="text-center text-gray-400 py-8">
+            <svg class="w-12 h-12 mx-auto mb-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <p class="text-lg font-medium mb-2">No matches found</p>
+            <p>We'll notify you when potential matches are discovered.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = matches.map(match => `
+        <div class="bg-gray-700 rounded-lg p-4 mb-4">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-white font-medium">Match Found!</h3>
+            <span class="text-sm text-gray-400">${match.confidence}% confidence</span>
+          </div>
+          <p class="text-gray-300 text-sm mb-3">${match.description}</p>
+          <div class="flex space-x-3">
+            <button onclick="confirmMatch('${match.id}')" class="btn-primary text-sm">Confirm Match</button>
+            <button onclick="rejectMatch('${match.id}')" class="btn-secondary text-sm">Not a Match</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Show matches error
+    function showMatchesError() {
+      document.getElementById('matchesList').innerHTML = `
+        <div class="text-center text-red-400 py-8">
+          <p>Failed to load matches. Please try again.</p>
+          <button onclick="loadMatches()" class="btn-primary mt-4">Retry</button>
+        </div>
+      `;
+    }
+
+    // Load notifications
+    async function loadNotifications() {
+      try {
+        const data = await window.api.notifications.list();
+        renderNotifications(data.results || []);
+        updateNotificationBadge(data.results?.filter(n => !n.read).length || 0);
+      } catch (error) {
+        console.error('Failed to load notifications:', error);
+        showNotificationsError();
+      }
+    }
+
+    // Render notifications
+    function renderNotifications(notifications) {
+      const container = document.getElementById('notificationsList');
+      
+      if (notifications.length === 0) {
+        container.innerHTML = `
+          <div class="text-center text-gray-400 py-8">
+            <svg class="w-12 h-12 mx-auto mb-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h5v-5l-5 5z"></path>
+            </svg>
+            <p class="text-lg font-medium mb-2">No notifications</p>
+            <p>You're all caught up!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = notifications.map(notification => `
+        <div class="bg-gray-700 rounded-lg p-4 mb-4 ${!notification.read ? 'border-l-4 border-blue-500' : ''}">
+          <div class="flex items-start justify-between">
+            <div class="flex-1">
+              <h3 class="text-white font-medium mb-1">${notification.title}</h3>
+              <p class="text-gray-300 text-sm mb-2">${notification.message}</p>
+              <span class="text-xs text-gray-400">${new Date(notification.created_at).toLocaleString()}</span>
+            </div>
+            ${!notification.read ? 
+              `<button onclick="markAsRead('${notification.id}')" class="text-blue-400 hover:text-blue-300 text-sm">Mark as read</button>` :
+              ''
+            }
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Show notifications error
+    function showNotificationsError() {
+      document.getElementById('notificationsList').innerHTML = `
+        <div class="text-center text-red-400 py-8">
+          <p>Failed to load notifications. Please try again.</p>
+          <button onclick="loadNotifications()" class="btn-primary mt-4">Retry</button>
+        </div>
+      `;
+    }
+
+    // Update notification badge
+    function updateNotificationBadge(count) {
+      const badge = document.getElementById('notificationBadge');
+      if (count > 0) {
+        badge.textContent = count;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    // Action handlers
+    function viewReport(reportId) {
+      // TODO: Implement view report modal or page
+      console.log('View report:', reportId);
+    }
+
+    function editReport(reportId) {
+      // TODO: Implement edit report functionality
+      console.log('Edit report:', reportId);
+    }
+
+    async function deleteReport(reportId) {
+      if (confirm('Are you sure you want to delete this report?')) {
+        try {
+          await window.api.reports.remove(reportId);
+          await loadMyReports(); // Reload the table
+        } catch (error) {
+          console.error('Failed to delete report:', error);
+          alert('Failed to delete report. Please try again.');
+        }
+      }
+    }
+
+    async function confirmMatch(matchId) {
+      try {
+        await window.api.matches.confirm(matchId);
+        await loadMatches(); // Reload matches
+      } catch (error) {
+        console.error('Failed to confirm match:', error);
+        alert('Failed to confirm match. Please try again.');
+      }
+    }
+
+    async function rejectMatch(matchId) {
+      try {
+        await window.api.matches.reject(matchId);
+        await loadMatches(); // Reload matches
+      } catch (error) {
+        console.error('Failed to reject match:', error);
+        alert('Failed to reject match. Please try again.');
+      }
+    }
+
+    async function markAsRead(notificationId) {
+      try {
+        await window.api.notifications.markRead(notificationId);
+        await loadNotifications(); // Reload notifications
+      } catch (error) {
+        console.error('Failed to mark notification as read:', error);
+      }
+    }
+  </script>
 </body>
 </html>
 

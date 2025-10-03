@@ -3,30 +3,352 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register</title>
+  <title>Register - CampusFound</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/tailwind.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            secondary: '#64748b'
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="min-h-screen bg-gray-50">
-  <main class="max-w-md mx-auto px-4 py-12">
-    <h1 class="text-2xl font-bold mb-6">Create an account</h1>
-    <form id="registerForm" class="space-y-3">
-      <input id="username" class="w-full border rounded px-3 py-2" placeholder="Username" required />
-      <input id="email" type="email" class="w-full border rounded px-3 py-2" placeholder="Email" required />
-      <input id="password" type="password" class="w-full border rounded px-3 py-2" placeholder="Password" required />
-      <input id="password2" type="password" class="w-full border rounded px-3 py-2" placeholder="Confirm Password" required />
-      <select id="role" class="w-full border rounded px-3 py-2">
-        <option value="student">Student</option>
-        <option value="staff">Staff</option>
-      </select>
-      <div id="regError" class="text-red-600 text-sm hidden"></div>
-      <button class="w-full bg-blue-600 text-white py-2 rounded">Register</button>
-    </form>
-  </main>
+<body class="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+  <div class="min-h-screen flex">
+    <!-- Left Side - Register Form -->
+    <div class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-20 xl:px-24">
+      <div class="mx-auto w-full max-w-sm lg:w-96">
+        <!-- Logo -->
+        <div class="flex items-center mb-8">
+          <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center mr-3">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <span class="text-2xl font-bold text-white">CampusFound</span>
+        </div>
 
+        <!-- Register Form -->
+        <div>
+          <h2 class="text-3xl font-bold text-white mb-2">Create Account</h2>
+          <p class="text-purple-200 mb-8">Join CampusFound to start finding your lost items.</p>
+
+          <form id="registerForm" class="space-y-6">
+            <!-- Username Field -->
+            <div>
+              <label for="username" class="block text-sm font-medium text-white mb-2">
+                Username
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                  </svg>
+                </div>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  required
+                  class="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-lg bg-gray-800/50 backdrop-blur-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Choose a username"
+                />
+              </div>
+            </div>
+
+            <!-- Email Field -->
+            <div>
+              <label for="email" class="block text-sm font-medium text-white mb-2">
+                Email Address
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+                  </svg>
+                </div>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  class="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-lg bg-gray-800/50 backdrop-blur-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter your email address"
+                />
+              </div>
+            </div>
+
+            <!-- Password Field -->
+            <div>
+              <label for="password" class="block text-sm font-medium text-white mb-2">
+                Password
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                  </svg>
+                </div>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  class="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-lg bg-gray-800/50 backdrop-blur-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Create a password"
+                />
+              </div>
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div>
+              <label for="confirmPassword" class="block text-sm font-medium text-white mb-2">
+                Confirm Password
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  required
+                  class="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-lg bg-gray-800/50 backdrop-blur-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Confirm your password"
+                />
+              </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="hidden bg-red-900/50 border border-red-500 text-red-200 px-4 py-3 rounded-lg">
+              <div class="flex">
+                <svg class="w-5 h-5 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+                <span id="errorText"></span>
+              </div>
+            </div>
+
+            <!-- Register Button -->
+            <div>
+              <button
+                type="submit"
+                id="registerBtn"
+                class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
+              >
+                <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                  <svg class="h-5 w-5 text-blue-300 group-hover:text-blue-200" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6z"></path>
+                  </svg>
+                </span>
+                <span id="registerBtnText">Create Account</span>
+                <div id="registerSpinner" class="hidden ml-2">
+                  <div class="spinner"></div>
+                </div>
+              </button>
+            </div>
+
+            <!-- Sign In Link -->
+            <div class="text-center">
+              <p class="text-gray-300">
+                Already have an account?
+                <a href="./login.html" class="font-medium text-blue-400 hover:text-blue-300 transition-colors">
+                  Sign in
+                </a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Welcome Message -->
+    <div class="hidden lg:block relative flex-1">
+      <div class="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-blue-600/20 backdrop-blur-sm"></div>
+      <div class="relative h-full flex items-center justify-center px-12">
+        <div class="max-w-md text-center">
+          <h1 class="text-4xl font-bold text-white mb-6">
+            JOIN US TODAY!
+          </h1>
+          <p class="text-xl text-purple-100 leading-relaxed mb-8">
+            Become part of the CampusFound community. Help others find their lost items and recover yours with our intelligent matching system.
+          </p>
+          
+          <!-- Features List -->
+          <div class="space-y-4">
+            <div class="flex items-center justify-center space-x-4">
+              <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <div class="text-white/80">AI-Powered Matching</div>
+            </div>
+            
+            <div class="flex items-center justify-center space-x-4">
+              <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+              </div>
+              <div class="text-white/80">Secure & Private</div>
+            </div>
+            
+            <div class="flex items-center justify-center space-x-4">
+              <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div class="text-white/80">24/7 Availability</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../js/theme.js"></script>
   <script src="../js/api.js"></script>
-  <script src="../js/ui.js"></script>
-  <script src="../js/auth.js"></script>
+  <script>
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check if already logged in
+      checkAuthStatus();
+      
+      // Set up form submission
+      document.getElementById('registerForm').addEventListener('submit', handleRegister);
+    });
+
+    // Check if user is already logged in
+    async function checkAuthStatus() {
+      try {
+        const user = await window.api.users.me();
+        // If we get here, user is already logged in
+        window.location.href = './user-dashboard.html';
+      } catch (error) {
+        // User is not logged in, continue with register page
+      }
+    }
+
+    // Handle register form submission
+    async function handleRegister(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(event.target);
+      const username = formData.get('username');
+      const email = formData.get('email');
+      const password = formData.get('password');
+      const confirmPassword = formData.get('confirmPassword');
+      
+      // Validation
+      if (!username || !email || !password || !confirmPassword) {
+        showError('Please fill in all fields');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showError('Passwords do not match');
+        return;
+      }
+
+      if (password.length < 6) {
+        showError('Password must be at least 6 characters long');
+        return;
+      }
+
+      setLoading(true);
+      hideError();
+
+      try {
+        await window.api.auth.register({
+          username,
+          email,
+          password,
+          password2: confirmPassword
+        });
+        
+        // Registration successful, now login
+        await window.api.auth.login(username, password);
+        
+        showSuccess('Account created successfully! Redirecting...');
+        
+        // Redirect after a short delay
+        setTimeout(() => {
+          window.location.href = './user-dashboard.html';
+        }, 1000);
+        
+      } catch (error) {
+        console.error('Registration failed:', error);
+        
+        if (error.response?.status === 400) {
+          const errorData = error.response.data;
+          if (errorData.username) {
+            showError('Username already exists');
+          } else if (errorData.email) {
+            showError('Email already registered');
+          } else {
+            showError('Please check your information and try again');
+          }
+        } else {
+          showError('Registration failed. Please try again later.');
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    // Show error message
+    function showError(message) {
+      const errorDiv = document.getElementById('errorMessage');
+      const errorText = document.getElementById('errorText');
+      
+      errorText.textContent = message;
+      errorDiv.classList.remove('hidden');
+    }
+
+    // Hide error message
+    function hideError() {
+      const errorDiv = document.getElementById('errorMessage');
+      errorDiv.classList.add('hidden');
+    }
+
+    // Show success message
+    function showSuccess(message) {
+      console.log('Success:', message);
+    }
+
+    // Set loading state
+    function setLoading(loading) {
+      const registerBtn = document.getElementById('registerBtn');
+      const registerBtnText = document.getElementById('registerBtnText');
+      const registerSpinner = document.getElementById('registerSpinner');
+      
+      if (loading) {
+        registerBtn.disabled = true;
+        registerBtn.classList.add('opacity-75', 'cursor-not-allowed');
+        registerBtnText.textContent = 'Creating Account...';
+        registerSpinner.classList.remove('hidden');
+      } else {
+        registerBtn.disabled = false;
+        registerBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+        registerBtnText.textContent = 'Create Account';
+        registerSpinner.classList.add('hidden');
+      }
+    }
+  </script>
 </body>
 </html>
 

@@ -14,11 +14,151 @@
           colors: {
             primary: '#2563eb',
             secondary: '#64748b'
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+            'slide-up': 'slideUp 0.8s ease-out forwards',
+            'slide-in-left': 'slideInLeft 0.8s ease-out forwards',
+            'slide-in-right': 'slideInRight 0.8s ease-out forwards',
+            'scale-in': 'scaleIn 0.6s ease-out forwards',
+            'bounce-gentle': 'bounceGentle 2s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+            'float': 'float 3s ease-in-out infinite',
+            'counter': 'counter 2s ease-out forwards',
+            'stagger-1': 'fadeIn 0.8s ease-out 0.1s forwards',
+            'stagger-2': 'fadeIn 0.8s ease-out 0.2s forwards',
+            'stagger-3': 'fadeIn 0.8s ease-out 0.3s forwards',
+            'stagger-4': 'fadeIn 0.8s ease-out 0.4s forwards'
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(40px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            },
+            slideInLeft: {
+              '0%': { opacity: '0', transform: 'translateX(-40px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' }
+            },
+            slideInRight: {
+              '0%': { opacity: '0', transform: 'translateX(40px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' }
+            },
+            scaleIn: {
+              '0%': { opacity: '0', transform: 'scale(0.8)' },
+              '100%': { opacity: '1', transform: 'scale(1)' }
+            },
+            bounceGentle: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' }
+            },
+            pulseGlow: {
+              '0%, 100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)' },
+              '50%': { boxShadow: '0 0 30px rgba(59, 130, 246, 0.6)' }
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+              '33%': { transform: 'translateY(-10px) rotate(1deg)' },
+              '66%': { transform: 'translateY(5px) rotate(-1deg)' }
+            },
+            counter: {
+              '0%': { transform: 'scale(0.5)', opacity: '0' },
+              '50%': { transform: 'scale(1.1)', opacity: '0.8' },
+              '100%': { transform: 'scale(1)', opacity: '1' }
+            }
           }
         }
       }
     }
   </script>
+  
+  <style>
+    /* Initial hidden state for animations */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
+    }
+    
+    .animate-on-scroll.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Staggered animation delays */
+    .animate-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+    .animate-on-scroll:nth-child(2) { transition-delay: 0.2s; }
+    .animate-on-scroll:nth-child(3) { transition-delay: 0.3s; }
+    .animate-on-scroll:nth-child(4) { transition-delay: 0.4s; }
+    
+    /* Hover effects */
+    .hover-lift {
+      transition: all 0.3s ease-out;
+    }
+    
+    .hover-lift:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Gradient text animation */
+    .gradient-text {
+      background: linear-gradient(45deg, #3b82f6, #8b5cf6, #06b6d4);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease-in-out infinite;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    /* Loading skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+    }
+    
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    
+    /* Particle effect */
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(59, 130, 246, 0.6);
+      border-radius: 50%;
+      animation: particle 4s linear infinite;
+    }
+    
+    @keyframes particle {
+      0% {
+        transform: translateY(0) translateX(0) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(100px) scale(0);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 <body class="min-h-screen transition-colors duration-300">
   <!-- Header -->
@@ -149,34 +289,48 @@
   <!-- Hero Section -->
   <main>
     <section class="relative bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 overflow-hidden">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+      <!-- Animated background particles -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 0.5s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 1.5s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 2.5s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 0.8s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 1.8s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 2.8s;"></div>
+      </div>
+      
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <!-- Left content -->
-          <div class="fade-in">
+          <div class="animate-on-scroll">
             <!-- AI Badge -->
-            <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 mb-6">
-              <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <div class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 dark:from-blue-900/30 dark:to-purple-900/30 dark:text-blue-300 mb-6 animate-pulse-glow hover-lift">
+              <svg class="w-4 h-4 mr-2 animate-bounce-gentle" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
               </svg>
-              AI-Powered Matching
+              <span class="gradient-text font-semibold">AI-Powered Matching</span>
             </div>
 
-            <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-              Never Lose Track of Your Belongings Again
+            <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight animate-slide-in-left">
+              Never Lose Track of Your 
+              <span class="gradient-text">Belongings</span> Again
             </h1>
             
-            <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+            <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed animate-slide-in-left" style="animation-delay: 0.2s;">
               Our intelligent lost and found system uses AI to match lost items with found ones, making campus recovery faster and easier than ever before.
             </p>
 
             <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 mb-12">
-              <a href="./report-lost.html" class="group relative overflow-hidden bg-red-600 hover:bg-red-700 text-white font-medium py-4 px-8 rounded-lg transition-all duration-300 ease-out transform hover:scale-105 hover:shadow-xl inline-flex items-center justify-center">
+            <div class="flex flex-col sm:flex-row gap-4 mb-12 animate-slide-in-left" style="animation-delay: 0.4s;">
+              <a href="./report-lost.html" class="group relative overflow-hidden bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 ease-out transform hover:scale-105 hover:shadow-2xl inline-flex items-center justify-center hover-lift">
                 <!-- Background animation -->
-                <div class="absolute inset-0 bg-gradient-to-r from-red-600 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
                 <!-- Ripple effect -->
-                <div class="absolute inset-0 bg-white opacity-0 group-active:opacity-20 transition-opacity duration-150 rounded-lg"></div>
+                <div class="absolute inset-0 bg-white opacity-0 group-active:opacity-20 transition-opacity duration-150 rounded-xl"></div>
                 
                 <!-- Content -->
                 <div class="relative z-10 flex items-center">
@@ -190,12 +344,12 @@
                 <div class="absolute top-0 -left-full h-full w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:left-full transition-all duration-700 ease-out"></div>
               </a>
               
-              <a href="./report-found.html" class="group relative overflow-hidden bg-green-600 hover:bg-green-700 text-white font-medium py-4 px-8 rounded-lg transition-all duration-300 ease-out transform hover:scale-105 hover:shadow-xl inline-flex items-center justify-center">
+              <a href="./report-found.html" class="group relative overflow-hidden bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 ease-out transform hover:scale-105 hover:shadow-2xl inline-flex items-center justify-center hover-lift">
                 <!-- Background animation -->
-                <div class="absolute inset-0 bg-gradient-to-r from-green-600 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
                 <!-- Ripple effect -->
-                <div class="absolute inset-0 bg-white opacity-0 group-active:opacity-20 transition-opacity duration-150 rounded-lg"></div>
+                <div class="absolute inset-0 bg-white opacity-0 group-active:opacity-20 transition-opacity duration-150 rounded-xl"></div>
                 
                 <!-- Content -->
                 <div class="relative z-10 flex items-center">
@@ -212,116 +366,188 @@
           </div>
 
           <!-- Right illustration -->
-          <div class="slide-up lg:order-last">
-            <div class="relative">
-              <!-- Placeholder for illustration -->
-              <div class="bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl p-8 shadow-2xl">
-                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center text-white">
-                  <div class="w-16 h-16 bg-white/20 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+          <div class="animate-on-scroll lg:order-last" style="animation-delay: 0.6s;">
+            <div class="relative animate-float">
+              <!-- Main illustration card -->
+              <div class="bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-3xl p-8 shadow-2xl hover-lift animate-pulse-glow">
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center text-white">
+                  <div class="w-20 h-20 bg-white/20 rounded-full mx-auto mb-6 flex items-center justify-center animate-bounce-gentle">
+                    <svg class="w-10 h-10 animate-spin" style="animation-duration: 3s;" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
                     </svg>
                   </div>
-                  <h3 class="text-xl font-semibold mb-2">Smart Matching</h3>
-                  <p class="text-white/80">AI connects lost and found items automatically</p>
+                  <h3 class="text-2xl font-bold mb-3 gradient-text">Smart Matching</h3>
+                  <p class="text-white/90 text-lg">AI connects lost and found items automatically</p>
+                  
+                  <!-- Progress indicator -->
+                  <div class="mt-6 bg-white/20 rounded-full h-2 overflow-hidden">
+                    <div class="bg-gradient-to-r from-green-400 to-blue-400 h-full rounded-full animate-pulse" style="width: 95%;"></div>
+                  </div>
+                  <p class="text-white/70 text-sm mt-2">95% Match Accuracy</p>
                 </div>
               </div>
               
-              <!-- Match notification popup -->
-              <div class="absolute -top-4 -right-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 border border-gray-200 dark:border-gray-700">
+              <!-- Animated match notification popup -->
+              <div class="absolute -top-6 -right-6 bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-4 border border-gray-200 dark:border-gray-700 animate-scale-in hover-lift" style="animation-delay: 1s;">
                 <div class="flex items-center space-x-3">
-                  <div class="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                    <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                  <div class="w-10 h-10 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center animate-bounce-gentle">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                     </svg>
                   </div>
                   <div>
-                    <p class="font-semibold text-gray-900 dark:text-white">Match Found!</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">95% confidence</p>
+                    <p class="font-bold text-gray-900 dark:text-white">Match Found!</p>
+                    <p class="text-sm text-green-600 dark:text-green-400 font-semibold">95% confidence</p>
                   </div>
                 </div>
               </div>
+              
+              <!-- Additional floating elements -->
+              <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-80 animate-bounce-gentle" style="animation-delay: 0.5s;"></div>
+              <div class="absolute top-1/2 -left-8 w-8 h-8 bg-gradient-to-r from-pink-400 to-red-500 rounded-full opacity-60 animate-float" style="animation-delay: 1.5s;"></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="py-16 bg-white dark:bg-gray-900">
+    <!-- Enhanced Stats Section -->
+    <section class="py-20 bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 animate-on-scroll">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+            Trusted by <span class="gradient-text">Thousands</span> of Students
+          </h2>
+          <p class="text-lg text-gray-600 dark:text-gray-300">Real results from our campus community</p>
+        </div>
+        
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="stats-card text-center">
-            <div class="stats-number" id="recoveryRate">50%+</div>
-            <div class="stats-label">Recovery Rate</div>
+          <div class="stats-card text-center bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover-lift animate-on-scroll border border-gray-200 dark:border-gray-700">
+            <div class="w-16 h-16 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce-gentle">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div class="stats-number text-4xl font-bold text-gray-900 dark:text-white mb-2 animate-counter" id="recoveryRate" data-target="87">0%</div>
+            <div class="stats-label text-lg font-semibold text-gray-600 dark:text-gray-300">Recovery Rate</div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Items successfully returned</p>
           </div>
-          <div class="stats-card text-center">
-            <div class="stats-number">24/7</div>
-            <div class="stats-label">Availability</div>
+          
+          <div class="stats-card text-center bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover-lift animate-on-scroll border border-gray-200 dark:border-gray-700" style="animation-delay: 0.1s;">
+            <div class="w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce-gentle" style="animation-delay: 0.2s;">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div class="stats-number text-4xl font-bold text-gray-900 dark:text-white mb-2">24/7</div>
+            <div class="stats-label text-lg font-semibold text-gray-600 dark:text-gray-300">Availability</div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Always here when you need us</p>
           </div>
-          <div class="stats-card text-center">
-            <div class="stats-number" id="itemsMatched">1,200+</div>
-            <div class="stats-label">Items Matched</div>
+          
+          <div class="stats-card text-center bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover-lift animate-on-scroll border border-gray-200 dark:border-gray-700" style="animation-delay: 0.2s;">
+            <div class="w-16 h-16 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce-gentle" style="animation-delay: 0.4s;">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+            <div class="stats-number text-4xl font-bold text-gray-900 dark:text-white mb-2 animate-counter" id="itemsMatched" data-target="2847">0</div>
+            <div class="stats-label text-lg font-semibold text-gray-600 dark:text-gray-300">Items Matched</div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Successful reunions made</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="py-16 bg-white dark:bg-gray-900">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">How It Works</h2>
-          <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Our AI-powered system makes finding lost items simple and efficient. Here's how CampusFound helps reunite you with your belongings.
+    <!-- Enhanced How It Works Section -->
+    <section id="how-it-works" class="py-20 bg-white dark:bg-gray-900 relative overflow-hidden">
+      <!-- Background decoration -->
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-gray-800/50 dark:to-gray-700/50"></div>
+      
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-16 animate-on-scroll">
+          <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">
+            How <span class="gradient-text">CampusFound</span> Works
+          </h2>
+          <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Our AI-powered system makes finding lost items simple and efficient. Here's how we help reunite you with your belongings in just three easy steps.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+          <!-- Connection lines -->
+          <div class="hidden md:block absolute top-1/2 left-1/3 w-1/3 h-0.5 bg-gradient-to-r from-red-300 via-purple-300 to-green-300 transform -translate-y-1/2 animate-pulse"></div>
+          
           <!-- Step 1 -->
-          <div class="text-center">
-            <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span class="text-2xl font-bold text-blue-600 dark:text-blue-400">1</span>
+          <div class="text-center animate-on-scroll hover-lift">
+            <div class="relative mb-8">
+              <div class="w-20 h-20 bg-gradient-to-r from-red-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-gentle shadow-lg">
+                <span class="text-3xl font-bold text-white">1</span>
+              </div>
+              <!-- Connecting arrow -->
+              <div class="hidden md:block absolute -right-8 top-1/2 transform -translate-y-1/2">
+                <svg class="w-6 h-6 text-red-400 animate-bounce-gentle" style="animation-delay: 0.5s;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+              </div>
             </div>
-            <div class="bg-red-50 dark:bg-red-900/20 rounded-lg p-6 mb-4">
-              <svg class="w-12 h-12 text-red-600 dark:text-red-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-              </svg>
-              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Report Lost Item</h3>
-              <p class="text-gray-600 dark:text-gray-400">
-                Lost something? Create a detailed report with photos, description, and location. The more details, the better!
+            
+            <div class="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-2xl p-8 shadow-lg border border-red-100 dark:border-red-800/30 hover:shadow-xl transition-all duration-300">
+              <div class="w-16 h-16 bg-gradient-to-r from-red-500 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-6 animate-float">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Report Lost Item</h3>
+              <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                Lost something? Create a detailed report with photos, description, and location. The more details you provide, the better our AI can help!
               </p>
             </div>
           </div>
 
           <!-- Step 2 -->
-          <div class="text-center">
-            <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span class="text-2xl font-bold text-blue-600 dark:text-blue-400">2</span>
+          <div class="text-center animate-on-scroll hover-lift" style="animation-delay: 0.2s;">
+            <div class="relative mb-8">
+              <div class="w-20 h-20 bg-gradient-to-r from-purple-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-gentle shadow-lg" style="animation-delay: 0.2s;">
+                <span class="text-3xl font-bold text-white">2</span>
+              </div>
+              <!-- Connecting arrow -->
+              <div class="hidden md:block absolute -right-8 top-1/2 transform -translate-y-1/2">
+                <svg class="w-6 h-6 text-purple-400 animate-bounce-gentle" style="animation-delay: 0.7s;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+              </div>
             </div>
-            <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6 mb-4">
-              <svg class="w-12 h-12 text-purple-600 dark:text-purple-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-              </svg>
-              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">AI Matching</h3>
-              <p class="text-gray-600 dark:text-gray-400">
-                Our intelligent system analyzes descriptions, images, and locations to automatically match lost and found items.
+            
+            <div class="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-2xl p-8 shadow-lg border border-purple-100 dark:border-purple-800/30 hover:shadow-xl transition-all duration-300">
+              <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-6 animate-float" style="animation-delay: 0.5s;">
+                <svg class="w-8 h-8 text-white animate-spin" style="animation-duration: 3s;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">AI Matching</h3>
+              <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                Our intelligent system analyzes descriptions, images, and locations to automatically match lost and found items with incredible accuracy.
               </p>
             </div>
           </div>
 
           <!-- Step 3 -->
-          <div class="text-center">
-            <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span class="text-2xl font-bold text-blue-600 dark:text-blue-400">3</span>
+          <div class="text-center animate-on-scroll hover-lift" style="animation-delay: 0.4s;">
+            <div class="relative mb-8">
+              <div class="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-gentle shadow-lg" style="animation-delay: 0.4s;">
+                <span class="text-3xl font-bold text-white">3</span>
+              </div>
             </div>
-            <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-6 mb-4">
-              <svg class="w-12 h-12 text-green-600 dark:text-green-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Get Reunited</h3>
-              <p class="text-gray-600 dark:text-gray-400">
-                Receive instant notifications when matches are found. Connect with finders and get your belongings back safely!
+            
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl p-8 shadow-lg border border-green-100 dark:border-green-800/30 hover:shadow-xl transition-all duration-300">
+              <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-6 animate-float" style="animation-delay: 1s;">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Get Reunited</h3>
+              <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                Receive instant notifications when matches are found. Connect with finders and get your belongings back safely and securely!
               </p>
             </div>
           </div>
@@ -598,6 +824,8 @@
       await checkAuthStatus();
       await loadRecentReports();
       await loadStats();
+      initializeAnimations();
+      initializeCounters();
     });
 
     // Check authentication status
@@ -744,6 +972,84 @@
       });
     });
 
+
+    // Initialize scroll animations
+    function initializeAnimations() {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+          }
+        });
+      }, observerOptions);
+
+      // Observe all elements with animate-on-scroll class
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // Initialize counter animations
+    function initializeCounters() {
+      const counters = document.querySelectorAll('.animate-counter');
+      
+      const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const counter = entry.target;
+            const target = parseInt(counter.getAttribute('data-target'));
+            const isPercentage = counter.textContent.includes('%');
+            
+            animateCounter(counter, target, isPercentage);
+            counterObserver.unobserve(counter);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      counters.forEach(counter => {
+        counterObserver.observe(counter);
+      });
+    }
+
+    // Animate counter function
+    function animateCounter(element, target, isPercentage = false) {
+      let current = 0;
+      const increment = target / 100;
+      const duration = 2000; // 2 seconds
+      const stepTime = duration / 100;
+
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        
+        const displayValue = Math.floor(current);
+        element.textContent = isPercentage ? `${displayValue}%` : displayValue.toLocaleString();
+      }, stepTime);
+    }
+
+    // Add parallax effect to hero section
+    function initializeParallax() {
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallaxElements = document.querySelectorAll('.animate-float');
+        
+        parallaxElements.forEach(element => {
+          const speed = 0.5;
+          element.style.transform = `translateY(${scrolled * speed}px)`;
+        });
+      });
+    }
+
+    // Initialize parallax on load
+    window.addEventListener('load', initializeParallax);
 
     // Contact form submission
     document.getElementById('contactForm')?.addEventListener('submit', async function(e) {

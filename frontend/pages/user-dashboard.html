@@ -14,13 +14,86 @@
           colors: {
             primary: '#2563eb',
             secondary: '#64748b'
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-in-out',
+            'slide-up': 'slideUp 0.6s ease-out',
+            'slide-in-right': 'slideInRight 0.5s ease-out',
+            'bounce-gentle': 'bounceGentle 2s ease-in-out infinite',
+            'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
+            'float': 'float 6s ease-in-out infinite'
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' }
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            },
+            slideInRight: {
+              '0%': { opacity: '0', transform: 'translateX(20px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' }
+            },
+            bounceGentle: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-5px)' }
+            },
+            pulseSoft: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.7' }
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '25%': { transform: 'translateY(-10px) rotate(2deg)' },
+              '50%': { transform: 'translateY(-20px) rotate(0deg)' },
+              '75%': { transform: 'translateY(-10px) rotate(-2deg)' }
+            }
           }
         }
       }
     }
   </script>
+  <style>
+    .glass-effect {
+      background: rgba(31, 41, 55, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(75, 85, 99, 0.3);
+    }
+    
+    .hover-lift {
+      transition: all 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .gradient-border {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 1px;
+      border-radius: 12px;
+    }
+    
+    .gradient-border-content {
+      background: #1f2937;
+      border-radius: 11px;
+      padding: 1.5rem;
+    }
+    
+    .stats-card {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+    
+    .empty-state {
+      background: radial-gradient(circle at center, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+    }
+  </style>
 </head>
-<body class="min-h-screen bg-gray-900 text-white">
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-x-hidden">
   <!-- Header -->
   <header class="bg-gray-800 border-b border-gray-700">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -140,70 +213,180 @@
     </div>
   </header>
 
+  <!-- Background Elements -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-20 left-10 w-64 h-64 bg-blue-500/5 rounded-full animate-float"></div>
+    <div class="absolute top-40 right-20 w-32 h-32 bg-purple-500/5 rounded-full animate-float" style="animation-delay: 2s;"></div>
+    <div class="absolute bottom-20 left-1/4 w-48 h-48 bg-green-500/5 rounded-full animate-float" style="animation-delay: 4s;"></div>
+  </div>
+
   <!-- Main Content -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Page Header -->
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold text-white mb-2">My Dashboard</h1>
-      <p class="text-gray-400">Manage your reports, matches, and notifications</p>
+    <div class="mb-12 animate-fade-in">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-4xl font-bold text-white mb-3 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            My Dashboard
+          </h1>
+          <p class="text-gray-400 text-lg">Manage your reports, matches, and notifications</p>
+        </div>
+        <div class="flex space-x-4">
+          <button class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover-lift transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25">
+            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            Report Item
+          </button>
+        </div>
+      </div>
     </div>
 
-    <!-- Tab Navigation -->
-    <div class="mb-8">
-      <nav class="flex space-x-8 border-b border-gray-700">
-        <button
-          id="myReportsTab"
-          class="tab-button py-2 px-1 border-b-2 border-blue-500 text-blue-400 font-medium"
-          onclick="switchTab('myReports')"
-        >
-          My Reports
-        </button>
-        <button
-          id="matchesTab"
-          class="tab-button py-2 px-1 border-b-2 border-transparent text-gray-400 hover:text-gray-300 font-medium"
-          onclick="switchTab('matches')"
-        >
-          Matches
-        </button>
-        <button
-          id="notificationsTab"
-          class="tab-button py-2 px-1 border-b-2 border-transparent text-gray-400 hover:text-gray-300 font-medium"
-          onclick="switchTab('notifications')"
-        >
-          Notifications
-        </button>
-      </nav>
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div class="stats-card rounded-xl p-6 hover-lift animate-slide-up">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-400 text-sm font-medium">Total Reports</p>
+            <p class="text-3xl font-bold text-white mt-1" id="totalReports">0</p>
+          </div>
+          <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-card rounded-xl p-6 hover-lift animate-slide-up" style="animation-delay: 0.1s;">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-400 text-sm font-medium">Active Matches</p>
+            <p class="text-3xl font-bold text-white mt-1" id="activeMatches">0</p>
+          </div>
+          <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-card rounded-xl p-6 hover-lift animate-slide-up" style="animation-delay: 0.2s;">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-400 text-sm font-medium">Resolved Items</p>
+            <p class="text-3xl font-bold text-white mt-1" id="resolvedItems">0</p>
+          </div>
+          <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-card rounded-xl p-6 hover-lift animate-slide-up" style="animation-delay: 0.3s;">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-400 text-sm font-medium">Notifications</p>
+            <p class="text-3xl font-bold text-white mt-1" id="notificationCount">0</p>
+          </div>
+          <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h5v-5l-5 5z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Tab Content -->
-    <div id="tabContent">
+    <!-- Enhanced Tab Navigation -->
+    <div class="mb-8 animate-slide-up" style="animation-delay: 0.4s;">
+      <div class="glass-effect rounded-xl p-2">
+        <nav class="flex space-x-2">
+          <button
+            id="myReportsTab"
+            class="tab-button flex-1 py-3 px-6 rounded-lg font-medium transition-all duration-300 bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
+            onclick="switchTab('myReports')"
+          >
+            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            My Reports
+          </button>
+          <button
+            id="matchesTab"
+            class="tab-button flex-1 py-3 px-6 rounded-lg font-medium transition-all duration-300 text-gray-400 hover:text-white hover:bg-gray-700/50"
+            onclick="switchTab('matches')"
+          >
+            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Matches
+          </button>
+          <button
+            id="notificationsTab"
+            class="tab-button flex-1 py-3 px-6 rounded-lg font-medium transition-all duration-300 text-gray-400 hover:text-white hover:bg-gray-700/50"
+            onclick="switchTab('notifications')"
+          >
+            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h5v-5l-5 5z"></path>
+            </svg>
+            Notifications
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Enhanced Tab Content -->
+    <div id="tabContent" class="animate-slide-up" style="animation-delay: 0.5s;">
       <!-- My Reports Tab -->
       <div id="myReportsContent" class="tab-content">
-        <div class="bg-gray-800 rounded-lg overflow-hidden">
-          <!-- Table Header -->
-          <div class="px-6 py-4 border-b border-gray-700">
-            <h2 class="text-xl font-semibold text-white">My Reported Items</h2>
+        <div class="glass-effect rounded-xl overflow-hidden hover-lift">
+          <!-- Enhanced Header -->
+          <div class="px-8 py-6 border-b border-gray-700/50 bg-gradient-to-r from-blue-600/10 to-purple-600/10">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-2xl font-bold text-white mb-2">My Reported Items</h2>
+                <p class="text-gray-400">Track and manage your lost/found item reports</p>
+              </div>
+              <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200">
+                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                New Report
+              </button>
+            </div>
           </div>
 
-          <!-- Table -->
+          <!-- Enhanced Table -->
           <div class="overflow-x-auto">
-            <table class="data-table w-full">
+            <table class="w-full">
               <thead>
-                <tr class="bg-gray-700">
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Item</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Description</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Date Reported</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
+                <tr class="bg-gray-800/50">
+                  <th class="px-8 py-4 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">Item</th>
+                  <th class="px-8 py-4 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">Description</th>
+                  <th class="px-8 py-4 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">Date</th>
+                  <th class="px-8 py-4 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">Status</th>
+                  <th class="px-8 py-4 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
-              <tbody id="reportsTableBody" class="bg-gray-800 divide-y divide-gray-700">
-                <!-- Loading state -->
+              <tbody id="reportsTableBody" class="divide-y divide-gray-700/50">
+                <!-- Enhanced Empty State -->
                 <tr>
-                  <td colspan="5" class="px-6 py-8 text-center text-gray-400">
-                    <div class="flex items-center justify-center">
-                      <div class="spinner mr-3"></div>
-                      Loading your reports...
+                  <td colspan="5" class="px-8 py-16 text-center">
+                    <div class="empty-state rounded-xl p-8 mx-8">
+                      <div class="w-24 h-24 bg-gray-700/50 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-gentle">
+                        <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                      </div>
+                      <h3 class="text-xl font-semibold text-white mb-2">No reports yet</h3>
+                      <p class="text-gray-400 mb-6">Start by reporting a lost or found item</p>
+                      <button class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium hover-lift transition-all duration-300">
+                        Report Item
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -213,35 +396,52 @@
         </div>
       </div>
 
-      <!-- Matches Tab -->
+      <!-- Enhanced Matches Tab -->
       <div id="matchesContent" class="tab-content hidden">
-        <div class="bg-gray-800 rounded-lg overflow-hidden">
-          <div class="px-6 py-4 border-b border-gray-700">
-            <h2 class="text-xl font-semibold text-white">Potential Matches</h2>
-          </div>
-          <div id="matchesList" class="p-6">
-            <div class="text-center text-gray-400 py-8">
-              <div class="flex items-center justify-center">
-                <div class="spinner mr-3"></div>
-                Loading matches...
+        <div class="glass-effect rounded-xl overflow-hidden hover-lift">
+          <div class="px-8 py-6 border-b border-gray-700/50 bg-gradient-to-r from-green-600/10 to-blue-600/10">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-2xl font-bold text-white mb-2">Potential Matches</h2>
+                <p class="text-gray-400">AI-powered matches for your reported items</p>
               </div>
+            </div>
+          </div>
+          <div id="matchesList" class="p-8">
+            <div class="empty-state rounded-xl p-8 text-center">
+              <div class="w-24 h-24 bg-gray-700/50 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse-soft">
+                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold text-white mb-2">No matches found</h3>
+              <p class="text-gray-400">We'll notify you when potential matches are discovered</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Notifications Tab -->
+      <!-- Enhanced Notifications Tab -->
       <div id="notificationsContent" class="tab-content hidden">
-        <div class="bg-gray-800 rounded-lg overflow-hidden">
-          <div class="px-6 py-4 border-b border-gray-700">
-            <h2 class="text-xl font-semibold text-white">Recent Notifications</h2>
-          </div>
-          <div id="notificationsList" class="p-6">
-            <div class="text-center text-gray-400 py-8">
-              <div class="flex items-center justify-center">
-                <div class="spinner mr-3"></div>
-                Loading notifications...
+        <div class="glass-effect rounded-xl overflow-hidden hover-lift">
+          <div class="px-8 py-6 border-b border-gray-700/50 bg-gradient-to-r from-yellow-600/10 to-orange-600/10">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-2xl font-bold text-white mb-2">Recent Notifications</h2>
+                <p class="text-gray-400">Stay updated with the latest activity</p>
               </div>
+              <button class="text-blue-400 hover:text-blue-300 font-medium">Mark all as read</button>
+            </div>
+          </div>
+          <div id="notificationsList" class="p-8">
+            <div class="empty-state rounded-xl p-8 text-center">
+              <div class="w-24 h-24 bg-gray-700/50 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-gentle">
+                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h5v-5l-5 5z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold text-white mb-2">No notifications</h3>
+              <p class="text-gray-400">You're all caught up! Check back later for updates</p>
             </div>
           </div>
         </div>

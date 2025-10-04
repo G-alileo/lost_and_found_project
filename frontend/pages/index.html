@@ -688,80 +688,164 @@
             </div>
           </div>
 
-          <!-- Contact Form -->
-          <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-8">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Send us a Message</h3>
-            <form id="contactForm" class="space-y-6">
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label for="firstName" class="form-label">First Name *</label>
-                  <input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    required
-                    class="input-field w-full"
-                    placeholder="John"
-                  />
-                </div>
-                <div>
-                  <label for="lastName" class="form-label">Last Name *</label>
-                  <input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    required
-                    class="input-field w-full"
-                    placeholder="Doe"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label for="email" class="form-label">Email *</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  class="input-field w-full"
-                  placeholder="john.doe@university.edu"
-                />
-              </div>
-
-              <div>
-                <label for="subject" class="form-label">Subject *</label>
-                <select id="subject" name="subject" required class="input-field w-full">
-                  <option value="">Select a topic</option>
-                  <option value="general">General Inquiry</option>
-                  <option value="technical">Technical Support</option>
-                  <option value="report">Report Issue</option>
-                  <option value="suggestion">Suggestion</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-
-              <div>
-                <label for="message" class="form-label">Message *</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows="4"
-                  class="input-field w-full resize-none"
-                  placeholder="Tell us how we can help you..."
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                class="btn-primary w-full inline-flex items-center justify-center"
-              >
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+          <!-- Enhanced Contact Form -->
+          <div class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700 animate-on-scroll">
+            <!-- Form Header -->
+            <div class="text-center mb-8">
+              <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl mb-4 animate-bounce-gentle">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                 </svg>
-                Send Message
-              </button>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Send us a Message</h3>
+              <p class="text-gray-600 dark:text-gray-400">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+            </div>
+
+            <form id="contactForm" class="space-y-6">
+              <!-- Name Fields -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="form-group">
+                  <label for="firstName" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">First Name *</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                      </svg>
+                    </div>
+                    <input
+                      id="firstName"
+                      name="firstName"
+                      type="text"
+                      required
+                      class="w-full pl-10 pr-4 py-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                      placeholder="John"
+                    />
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="lastName" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Last Name *</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                      </svg>
+                    </div>
+                    <input
+                      id="lastName"
+                      name="lastName"
+                      type="text"
+                      required
+                      class="w-full pl-10 pr-4 py-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                      placeholder="Doe"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Email Field -->
+              <div class="form-group">
+                <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Email Address *</label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+                    </svg>
+                  </div>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    class="w-full pl-10 pr-4 py-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                    placeholder="john.doe@university.edu"
+                  />
+                </div>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 flex items-center">
+                  <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  We'll never share your email with anyone else
+                </p>
+              </div>
+
+              <!-- Subject Field -->
+              <div class="form-group">
+                <label for="subject" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Subject *</label>
+                <div class="relative">
+                  <select id="subject" name="subject" required class="w-full px-4 py-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white appearance-none">
+                    <option value="">Select a topic</option>
+                    <option value="general">💬 General Inquiry</option>
+                    <option value="technical">🔧 Technical Support</option>
+                    <option value="report">🚨 Report Issue</option>
+                    <option value="suggestion">💡 Suggestion</option>
+                    <option value="lost-item">🔍 Lost Item Help</option>
+                    <option value="found-item">✅ Found Item Report</option>
+                    <option value="other">📝 Other</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Message Field -->
+              <div class="form-group">
+                <label for="message" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Message *</label>
+                <div class="relative">
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows="5"
+                    class="w-full px-4 py-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 resize-none"
+                    placeholder="Tell us how we can help you. Be as detailed as possible so we can provide the best assistance..."
+                  ></textarea>
+                  <div class="absolute bottom-3 right-3 text-xs text-gray-400">
+                    <span id="messageCharCount">0</span>/500
+                  </div>
+                </div>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 flex items-center">
+                  <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                  </svg>
+                  The more details you provide, the better we can help you
+                </p>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="pt-4">
+                <button
+                  type="submit"
+                  id="contactSubmitBtn"
+                  class="group relative overflow-hidden w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 ease-out transform hover:scale-105 hover:shadow-2xl inline-flex items-center justify-center"
+                >
+                  <!-- Background animation -->
+                  <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  <!-- Ripple effect -->
+                  <div class="absolute inset-0 bg-white opacity-0 group-active:opacity-20 transition-opacity duration-150 rounded-xl"></div>
+                  
+                  <!-- Content -->
+                  <div class="relative z-10 flex items-center">
+                    <svg class="w-5 h-5 mr-2 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                    <span id="contactSubmitText" class="group-hover:translate-x-1 transition-transform duration-300">Send Message</span>
+                    <div id="contactSubmitSpinner" class="hidden ml-2">
+                      <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                  </div>
+                  
+                  <!-- Shine effect -->
+                  <div class="absolute top-0 -left-full h-full w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:left-full transition-all duration-700 ease-out"></div>
+                </button>
+              </div>
+
+              <!-- Success/Error Messages -->
+              <div id="contactFormMessage" class="hidden mt-4 p-4 rounded-xl"></div>
             </form>
           </div>
         </div>
@@ -826,6 +910,7 @@
       await loadStats();
       initializeAnimations();
       initializeCounters();
+      initializeContactForm();
     });
 
     // Check authentication status
@@ -1051,38 +1136,153 @@
     // Initialize parallax on load
     window.addEventListener('load', initializeParallax);
 
-    // Contact form submission
-    document.getElementById('contactForm')?.addEventListener('submit', async function(e) {
+    // Initialize contact form functionality
+    function initializeContactForm() {
+      const messageTextarea = document.getElementById('message');
+      const charCountSpan = document.getElementById('messageCharCount');
+      
+      // Character counting for message field
+      if (messageTextarea && charCountSpan) {
+        messageTextarea.addEventListener('input', () => {
+          const length = messageTextarea.value.length;
+          charCountSpan.textContent = length;
+          
+          // Change color based on character count
+          if (length > 400) {
+            charCountSpan.classList.add('text-red-500');
+            charCountSpan.classList.remove('text-gray-400', 'text-yellow-500');
+          } else if (length > 300) {
+            charCountSpan.classList.add('text-yellow-500');
+            charCountSpan.classList.remove('text-gray-400', 'text-red-500');
+          } else {
+            charCountSpan.classList.add('text-gray-400');
+            charCountSpan.classList.remove('text-yellow-500', 'text-red-500');
+          }
+        });
+      }
+
+      // Form validation and submission
+      const contactForm = document.getElementById('contactForm');
+      if (contactForm) {
+        contactForm.addEventListener('submit', handleContactFormSubmission);
+      }
+    }
+
+    // Enhanced contact form submission
+    async function handleContactFormSubmission(e) {
       e.preventDefault();
       
-      const formData = new FormData(this);
-      const submitBtn = this.querySelector('button[type="submit"]');
-      const originalText = submitBtn.innerHTML;
+      const form = e.target;
+      const submitBtn = document.getElementById('contactSubmitBtn');
+      const submitText = document.getElementById('contactSubmitText');
+      const submitSpinner = document.getElementById('contactSubmitSpinner');
+      const messageDiv = document.getElementById('contactFormMessage');
+      
+      // Get form data
+      const formData = new FormData(form);
+      const data = {
+        firstName: formData.get('firstName'),
+        lastName: formData.get('lastName'),
+        email: formData.get('email'),
+        subject: formData.get('subject'),
+        message: formData.get('message')
+      };
+      
+      // Validate form
+      if (!validateContactForm(data)) {
+        showContactMessage('Please fill in all required fields correctly.', 'error');
+        return;
+      }
       
       // Show loading state
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = `
-        <div class="spinner mr-2"></div>
-        Sending...
-      `;
+      setContactFormLoading(true);
       
       try {
-        // Simulate form submission (replace with actual API call)
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Simulate API call (replace with actual endpoint)
+        await new Promise(resolve => setTimeout(resolve, 2000));
         
         // Show success message
-        window.showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
-        this.reset();
+        showContactMessage('🎉 Message sent successfully! We\'ll get back to you within 24 hours.', 'success');
+        
+        // Reset form
+        form.reset();
+        document.getElementById('messageCharCount').textContent = '0';
+        
+        // Add success animation
+        submitBtn.classList.add('animate-bounce-gentle');
+        setTimeout(() => {
+          submitBtn.classList.remove('animate-bounce-gentle');
+        }, 2000);
         
       } catch (error) {
         console.error('Failed to send message:', error);
-        window.showNotification('Failed to send message. Please try again later.', 'error');
+        showContactMessage('❌ Failed to send message. Please try again later.', 'error');
       } finally {
-        // Reset button
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
+        setContactFormLoading(false);
       }
-    });
+    }
+
+    // Validate contact form data
+    function validateContactForm(data) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      return data.firstName.trim() && 
+             data.lastName.trim() && 
+             data.email.trim() && 
+             emailRegex.test(data.email) &&
+             data.subject.trim() && 
+             data.message.trim() &&
+             data.message.length <= 500;
+    }
+
+    // Set contact form loading state
+    function setContactFormLoading(loading) {
+      const submitBtn = document.getElementById('contactSubmitBtn');
+      const submitText = document.getElementById('contactSubmitText');
+      const submitSpinner = document.getElementById('contactSubmitSpinner');
+      
+      if (loading) {
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+        submitText.textContent = 'Sending Message...';
+        submitSpinner.classList.remove('hidden');
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+        submitText.textContent = 'Send Message';
+        submitSpinner.classList.add('hidden');
+      }
+    }
+
+    // Show contact form message
+    function showContactMessage(message, type) {
+      const messageDiv = document.getElementById('contactFormMessage');
+      
+      messageDiv.className = `mt-4 p-4 rounded-xl flex items-center animate-scale-in`;
+      
+      if (type === 'success') {
+        messageDiv.classList.add('bg-green-50', 'dark:bg-green-900/30', 'border', 'border-green-200', 'dark:border-green-800', 'text-green-700', 'dark:text-green-300');
+      } else {
+        messageDiv.classList.add('bg-red-50', 'dark:bg-red-900/30', 'border', 'border-red-200', 'dark:border-red-800', 'text-red-700', 'dark:text-red-300');
+      }
+      
+      messageDiv.innerHTML = `
+        <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+          ${type === 'success' 
+            ? '<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>'
+            : '<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>'
+          }
+        </svg>
+        <span>${message}</span>
+      `;
+      
+      messageDiv.classList.remove('hidden');
+      
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        messageDiv.classList.add('hidden');
+      }, 5000);
+    }
   </script>
 </body>
 </html>

@@ -1,6 +1,4 @@
 /* CampusFound Design System */
-/* Tailwind CSS is loaded via CDN in HTML files */
-
 /* Custom CSS Variables for Theme */
 :root {
   /* Light theme colors */
@@ -49,44 +47,20 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Custom component classes */
-.btn-primary {
-  @apply px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200;
-}
-
-.btn-secondary {
-  @apply px-6 py-3 border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-medium rounded-lg transition-all duration-200;
-}
-
+/* Custom component classes - without @apply */
 .card {
-  @apply rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
 }
 
 .input-field {
-  @apply px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   color: var(--color-text-primary);
 }
 
 .nav-link {
-  @apply hover:text-blue-600 transition-colors duration-200 font-medium;
   color: var(--color-text-secondary);
-}
-
-/* Status badges */
-.badge-lost {
-  @apply bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 px-3 py-1 rounded-full text-sm font-medium;
-}
-
-.badge-found {
-  @apply bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 px-3 py-1 rounded-full text-sm font-medium;
-}
-
-.badge-matched {
-  @apply bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 px-3 py-1 rounded-full text-sm font-medium;
 }
 
 /* Hero section styles */
@@ -94,15 +68,7 @@ body {
   background: var(--gradient-hero);
 }
 
-/* Animation classes */
-.fade-in {
-  animation: fadeIn 0.6s ease-out;
-}
-
-.slide-up {
-  animation: slideUp 0.6s ease-out;
-}
-
+/* Animation keyframes */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -119,12 +85,6 @@ body {
   }
 }
 
-/* Notification popup */
-.notification-popup {
-  @apply fixed top-4 right-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-4 z-50 max-w-sm;
-  animation: slideInRight 0.3s ease-out;
-}
-
 @keyframes slideInRight {
   from {
     opacity: 0;
@@ -134,6 +94,20 @@ body {
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.slide-up {
+  animation: slideUp 0.6s ease-out;
+}
+
+/* Notification popup */
+.notification-popup {
+  animation: slideInRight 0.3s ease-out;
 }
 
 /* Custom scrollbar */
@@ -154,67 +128,27 @@ body {
   background: var(--color-secondary);
 }
 
-/* Loading spinner */
-.spinner {
-  @apply inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin;
-}
-
-/* Grid responsive adjustments */
-.items-grid {
-  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6;
-}
-
-/* Table styles for dashboard */
-.data-table {
-  @apply w-full border-collapse;
-}
-
-.data-table th {
-  @apply px-6 py-3 text-left text-xs font-medium uppercase tracking-wider border-b border-gray-200 dark:border-gray-700;
-  background: var(--color-surface);
-  color: var(--color-text-secondary);
-}
-
-.data-table td {
-  @apply px-6 py-4 whitespace-nowrap border-b border-gray-200 dark:border-gray-700;
-}
-
+/* Table hover effect */
 .data-table tr:hover {
   background: var(--color-background);
 }
 
 /* Form styles */
-.form-group {
-  @apply mb-6;
-}
-
 .form-label {
-  @apply block text-sm font-medium mb-2;
   color: var(--color-text-primary);
 }
 
-.form-error {
-  @apply text-red-500 text-sm mt-1;
-}
-
-/* Search and filter section */
+/* Filter section */
 .filter-section {
-  @apply p-6 rounded-xl mb-8;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
 }
 
 /* Stats section */
 .stats-card {
-  @apply p-6 rounded-xl text-center;
   background: var(--color-surface);
 }
 
-.stats-number {
-  @apply text-3xl font-bold text-blue-600 mb-2;
-}
-
 .stats-label {
-  @apply text-sm font-medium;
   color: var(--color-text-secondary);
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register - CampusFound</title>
+  <title>Register - LOAF</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="../css/custom-styles.css">
   <script>
@@ -36,30 +36,30 @@
     }
   </script>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+<body class="min-h-screen bg-gradient-to-br from-background to-background-alt dark:from-gray-900 dark:to-gray-800">
   <div class="min-h-screen flex">
     <!-- Left Side - Register Form -->
     <div class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-20 xl:px-24">
       <div class="mx-auto w-full max-w-sm lg:w-96">
         <!-- Logo -->
         <div class="flex items-center mb-8">
-          <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center mr-3">
+          <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center mr-3">
             <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
             </svg>
           </div>
-          <span class="text-2xl font-bold text-white">CampusFound</span>
+          <span class="text-2xl font-bold text-gray-900 dark:text-white">LOAF</span>
         </div>
 
         <!-- Register Form -->
         <div>
-          <h2 class="text-3xl font-bold text-white mb-2">Create Account</h2>
-          <p class="text-purple-200 mb-8">Join CampusFound to start finding your lost items.</p>
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Create Account</h2>
+          <p class="text-gray-600 dark:text-gray-300 mb-8">Join LOAF to start finding your lost items.</p>
 
           <form id="registerForm" class="space-y-6">
             <!-- Username Field -->
             <div>
-              <label for="username" class="block text-sm font-medium text-white mb-2">
+              <label for="username" class="block text-sm font-medium text-gray-900 dark:text-white mb-2">
                 Username
               </label>
               <div class="relative">
@@ -73,7 +73,7 @@
                   name="username"
                   type="text"
                   required
-                  class="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-lg bg-gray-800/50 backdrop-blur-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800/50 backdrop-blur-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="Choose a username"
                 />
               </div>
@@ -81,7 +81,7 @@
 
             <!-- Email Field -->
             <div>
-              <label for="email" class="block text-sm font-medium text-white mb-2">
+              <label for="email" class="block text-sm font-medium text-gray-900 dark:text-white mb-2">
                 Email Address
               </label>
               <div class="relative">
@@ -95,7 +95,7 @@
                   name="email"
                   type="email"
                   required
-                  class="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-lg bg-gray-800/50 backdrop-blur-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800/50 backdrop-blur-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="Enter your email address"
                 />
               </div>
@@ -103,7 +103,7 @@
 
             <!-- Password Field -->
             <div>
-              <label for="password" class="block text-sm font-medium text-white mb-2">
+              <label for="password" class="block text-sm font-medium text-gray-900 dark:text-white mb-2">
                 Password
               </label>
               <div class="relative">
@@ -117,7 +117,7 @@
                   name="password"
                   type="password"
                   required
-                  class="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-lg bg-gray-800/50 backdrop-blur-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800/50 backdrop-blur-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="Create a password"
                 />
               </div>
@@ -125,7 +125,7 @@
 
             <!-- Confirm Password Field -->
             <div>
-              <label for="confirmPassword" class="block text-sm font-medium text-white mb-2">
+              <label for="confirmPassword" class="block text-sm font-medium text-gray-900 dark:text-white mb-2">
                 Confirm Password
               </label>
               <div class="relative">
@@ -139,14 +139,14 @@
                   name="confirmPassword"
                   type="password"
                   required
-                  class="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-lg bg-gray-800/50 backdrop-blur-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800/50 backdrop-blur-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="Confirm your password"
                 />
               </div>
             </div>
 
             <!-- Error Message -->
-            <div id="errorMessage" class="hidden bg-red-900/50 border border-red-500 text-red-200 px-4 py-3 rounded-lg">
+            <div id="errorMessage" class="hidden bg-red-50 dark:bg-red-900/50 border border-red-300 dark:border-red-500 text-red-800 dark:text-red-200 px-4 py-3 rounded-lg">
               <div class="flex">
                 <svg class="w-5 h-5 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
@@ -160,10 +160,10 @@
               <button
                 type="submit"
                 id="registerBtn"
-                class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
+                class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-primary to-accent hover:from-primary-hover hover:to-accent-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200"
               >
                 <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                  <svg class="h-5 w-5 text-blue-300 group-hover:text-blue-200" fill="currentColor" viewBox="0 0 20 20">
+                  <svg class="h-5 w-5 text-primary-light group-hover:text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6z"></path>
                   </svg>
                 </span>
@@ -176,9 +176,9 @@
 
             <!-- Sign In Link -->
             <div class="text-center">
-              <p class="text-gray-300">
+              <p class="text-gray-600 dark:text-gray-300">
                 Already have an account?
-                <a href="./login.html" class="font-medium text-blue-400 hover:text-blue-300 transition-colors">
+                <a href="./login.html" class="font-medium text-primary dark:text-accent hover:text-primary-hover dark:hover:text-accent-hover transition-colors">
                   Sign in
                 </a>
               </p>
@@ -190,43 +190,43 @@
 
     <!-- Right Side - Welcome Message -->
     <div class="hidden lg:block relative flex-1">
-      <div class="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-blue-600/20 backdrop-blur-sm"></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-sm"></div>
       <div class="relative h-full flex items-center justify-center px-12">
         <div class="max-w-md text-center">
-          <h1 class="text-4xl font-bold text-white mb-6">
+          <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">
             JOIN US TODAY!
           </h1>
-          <p class="text-xl text-purple-100 leading-relaxed mb-8">
-            Become part of the CampusFound community. Help others find their lost items and recover yours with our intelligent matching system.
+          <p class="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+            Become part of the LOAF community. Help others find their lost items and recover yours with our intelligent matching system.
           </p>
           
           <!-- Features List -->
           <div class="space-y-4">
             <div class="flex items-center justify-center space-x-4">
-              <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-12 h-12 bg-primary/20 dark:bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <svg class="w-6 h-6 text-primary dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                 </svg>
               </div>
-              <div class="text-white/80">AI-Powered Matching</div>
+              <div class="text-gray-700 dark:text-white/80">AI-Powered Matching</div>
             </div>
             
             <div class="flex items-center justify-center space-x-4">
-              <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-12 h-12 bg-primary/20 dark:bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <svg class="w-6 h-6 text-primary dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                 </svg>
               </div>
-              <div class="text-white/80">Secure & Private</div>
+              <div class="text-gray-700 dark:text-white/80">Secure & Private</div>
             </div>
             
             <div class="flex items-center justify-center space-x-4">
-              <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-12 h-12 bg-primary/20 dark:bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <svg class="w-6 h-6 text-primary dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
               </div>
-              <div class="text-white/80">24/7 Availability</div>
+              <div class="text-gray-700 dark:text-white/80">24/7 Availability</div>
             </div>
           </div>
         </div>

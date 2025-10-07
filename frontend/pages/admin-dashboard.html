@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard</title>
+  <title>Admin Dashboard - LOAF</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="../css/custom-styles.css">
   <script>
@@ -37,45 +37,284 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="min-h-screen bg-gray-50">
-  <main class="max-w-6xl mx-auto px-4 py-8">
-    <h1 class="text-2xl font-bold mb-6">Admin Dashboard</h1>
-
-    <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-      <div class="bg-white p-4 rounded shadow"><div class="text-sm text-gray-500">Lost</div><div id="statLost" class="text-2xl font-bold">0</div></div>
-      <div class="bg-white p-4 rounded shadow"><div class="text-sm text-gray-500">Found</div><div id="statFound" class="text-2xl font-bold">0</div></div>
-      <div class="bg-white p-4 rounded shadow"><div class="text-sm text-gray-500">Matches</div><div id="statMatches" class="text-2xl font-bold">0</div></div>
-      <div class="bg-white p-4 rounded shadow"><div class="text-sm text-gray-500">Unclaimed</div><div id="statUnclaimed" class="text-2xl font-bold">0</div></div>
-    </section>
-
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <canvas id="barChart" height="160"></canvas>
-      <canvas id="pieChart" height="160"></canvas>
-    </section>
-
-    <section class="mt-8 bg-white p-4 rounded shadow">
-      <h2 class="font-semibold mb-3">Manage Categories</h2>
-      <div class="flex gap-2 mb-3">
-        <input id="newCategoryName" class="border rounded px-3 py-2" placeholder="New category" />
-        <button id="addCategoryBtn" class="px-4 py-2 bg-blue-600 text-white rounded">Add</button>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300 flex flex-col">
+  <!-- Enhanced Header -->
+  <header class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-white/20 dark:border-gray-700/20 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center">
+          <div class="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-xl flex items-center justify-center mr-3 shadow-lg">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <a href="./index.html" class="text-2xl font-bold text-gray-900 dark:text-white">LOAF</a>
+          <span class="ml-4 px-3 py-1 bg-gradient-to-r from-primary to-accent text-white text-sm font-semibold rounded-full">Admin</span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+            <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 716.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+          </button>
+        </div>
       </div>
-      <ul id="categoryList" class="space-y-2"></ul>
-    </section>
+    </div>
+  </header>
+
+  <main class="flex-grow px-4 sm:px-6 lg:px-8 py-8 min-h-[calc(100vh-theme(spacing.16)-theme(spacing.32))]">
+    <div class="max-w-7xl mx-auto">
+      <!-- Dashboard Header -->
+      <div class="text-center mb-12 pt-8">
+        <h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-4">Admin Dashboard</h1>
+        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Monitor and manage the LOAF platform with comprehensive analytics and controls.</p>
+      </div>
+
+      <!-- Enhanced Statistics Cards -->
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-16 h-16 bg-gradient-to-br from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">Lost Items</div>
+          <div id="statLost" class="text-3xl font-bold text-primary dark:text-primary-light mb-2">0</div>
+          <div class="text-sm text-gray-500 dark:text-gray-500">Awaiting recovery</div>
+        </div>
+        
+        <div class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-16 h-16 bg-gradient-to-br from-accent to-accent-hover rounded-2xl flex items-center justify-center shadow-lg">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">Found Items</div>
+          <div id="statFound" class="text-3xl font-bold text-accent dark:text-accent mb-2">0</div>
+          <div class="text-sm text-gray-500 dark:text-gray-500">Ready for pickup</div>
+        </div>
+        
+        <div class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-16 h-16 bg-gradient-to-br from-primary-light to-accent rounded-2xl flex items-center justify-center shadow-lg">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">Successful Matches</div>
+          <div id="statMatches" class="text-3xl font-bold text-primary-light dark:text-primary-light mb-2">0</div>
+          <div class="text-sm text-gray-500 dark:text-gray-500">Items reunited</div>
+        </div>
+        
+        <div class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-16 h-16 bg-gradient-to-br from-gray-500 to-gray-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">Unclaimed Items</div>
+          <div id="statUnclaimed" class="text-3xl font-bold text-gray-600 dark:text-gray-300 mb-2">0</div>
+          <div class="text-sm text-gray-500 dark:text-gray-500">Pending action</div>
+        </div>
+      </section>
+
+      <!-- Enhanced Charts Section -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <div class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+            <svg class="w-6 h-6 mr-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+            Monthly Activity
+          </h3>
+          <canvas id="barChart" height="200"></canvas>
+        </div>
+        
+        <div class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+            <svg class="w-6 h-6 mr-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+            </svg>
+            Item Categories
+          </h3>
+          <canvas id="pieChart" height="200"></canvas>
+        </div>
+      </section>
+
+      <!-- Enhanced Category Management -->
+      <section class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+        <div class="flex items-center mb-8">
+          <div class="w-12 h-12 bg-gradient-to-r from-primary to-accent rounded-xl flex items-center justify-center mr-4 shadow-lg">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Manage Categories</h2>
+            <p class="text-gray-600 dark:text-gray-400">Add, edit, and organize item categories for better classification</p>
+          </div>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+          <div class="flex-1">
+            <input id="newCategoryName" class="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400" placeholder="Enter new category name..." />
+          </div>
+          <button id="addCategoryBtn" class="px-8 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary-hover hover:to-accent-hover text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            Add Category
+          </button>
+        </div>
+        
+        <div class="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Current Categories</h3>
+          <ul id="categoryList" class="space-y-3"></ul>
+        </div>
+      </section>
+    </div>
   </main>
+
+  <!-- Enhanced Floating Bottom Dock Navigation -->
+  <nav class="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 dock-container">
+    <div class="bg-white/25 dark:bg-gray-900/25 backdrop-blur-2xl border border-white/40 dark:border-gray-700/40 rounded-3xl shadow-2xl px-8 py-4 dock-background">
+      <div class="flex items-center space-x-8 dock-items">
+        <!-- Home -->
+        <a href="./index.html" class="group flex flex-col items-center space-y-2 p-3 rounded-2xl transition-all duration-300 hover:bg-white/30 dark:hover:bg-gray-800/30 hover:scale-110 hover:-translate-y-1 dock-item">
+          <div class="w-12 h-12 flex items-center justify-center dock-icon-container">
+            <svg class="w-7 h-7 text-gray-600 dark:text-gray-400 group-hover:text-primary transition-all duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+          </div>
+          <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 group-hover:text-primary transition-all duration-300 dock-label">Home</span>
+        </a>
+
+        <!-- Browse -->
+        <a href="./browse.html" class="group flex flex-col items-center space-y-2 p-3 rounded-2xl transition-all duration-300 hover:bg-white/30 dark:hover:bg-gray-800/30 hover:scale-110 hover:-translate-y-1 dock-item">
+          <div class="w-12 h-12 flex items-center justify-center dock-icon-container">
+            <svg class="w-7 h-7 text-gray-600 dark:text-gray-400 group-hover:text-primary transition-all duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 group-hover:text-primary transition-all duration-300 dock-label">Browse</span>
+        </a>
+
+        <!-- Admin Dashboard (Active) -->
+        <a href="./admin-dashboard.html" class="group flex flex-col items-center space-y-2 p-3 rounded-2xl transition-all duration-300 hover:bg-white/30 dark:hover:bg-gray-800/30 hover:scale-110 hover:-translate-y-1 dock-item">
+          <div class="w-12 h-12 flex items-center justify-center dock-icon-container">
+            <svg class="w-7 h-7 text-primary group-hover:text-primary-light transition-all duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+          </div>
+          <span class="text-sm font-semibold text-primary transition-all duration-300 dock-label">Admin</span>
+        </a>
+
+        <!-- Theme Toggle -->
+        <button id="dockThemeToggle" class="group flex flex-col items-center space-y-2 p-3 rounded-2xl transition-all duration-300 hover:bg-white/30 dark:hover:bg-gray-800/30 hover:scale-110 hover:-translate-y-1 dock-item">
+          <div class="w-12 h-12 flex items-center justify-center dock-icon-container">
+            <span class="theme-icon">
+              <svg class="w-7 h-7 text-gray-600 dark:text-gray-400 group-hover:text-accent transition-all duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M17.293 13.293A8 8 0 716.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+              </svg>
+            </span>
+          </div>
+          <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 group-hover:text-accent transition-all duration-300 dock-label">Theme</span>
+        </button>
+
+        <!-- Admin Profile Menu -->
+        <div id="adminMenu" class="group relative">
+          <button id="adminMenuButton" class="flex flex-col items-center space-y-2 p-3 rounded-2xl transition-all duration-300 hover:bg-white/30 dark:hover:bg-gray-800/30 hover:scale-110 hover:-translate-y-1 dock-item">
+            <div class="w-12 h-12 flex items-center justify-center dock-icon-container">
+              <div id="adminAvatarContainer" class="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center">
+                <img id="adminAvatar" class="w-8 h-8 rounded-full hidden" src="" alt="">
+                <svg id="defaultAdminAvatar" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+            </div>
+            <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 group-hover:text-primary transition-all duration-300 dock-label" id="adminName">Admin</span>
+          </button>
+          
+          <!-- Admin Profile Dropdown Menu -->
+          <div id="adminProfileDropdown" class="hidden absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 w-48 bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-white/30 dark:border-gray-700/30 rounded-xl shadow-2xl z-50">
+            <div class="py-2">
+              <!-- Admin Info -->
+              <div class="px-4 py-3 border-b border-gray-200/50 dark:border-gray-700/50">
+                <div class="flex items-center space-x-3">
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center">
+                    <img id="dropdownAdminAvatar" class="w-8 h-8 rounded-full hidden" src="" alt="">
+                    <svg id="dropdownDefaultAdminAvatar" class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p id="dropdownAdminName" class="text-sm font-medium text-gray-900 dark:text-white">Administrator</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Admin Panel</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Menu Items -->
+              <div class="py-1">
+                <a href="./admin-dashboard.html" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors duration-200">
+                  <svg class="w-4 h-4 mr-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                  </svg>
+                  Admin Dashboard
+                </a>
+                
+                <button id="adminSettingsBtn" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors duration-200">
+                  <svg class="w-4 h-4 mr-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                  System Settings
+                </button>
+                
+                <button id="adminProfileBtn" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors duration-200">
+                  <svg class="w-4 h-4 mr-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                  </svg>
+                  Admin Profile
+                </button>
+                
+                <div class="border-t border-gray-200/50 dark:border-gray-700/50 my-1"></div>
+                
+                <button id="adminLogoutBtn" class="flex items-center w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200">
+                  <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                  </svg>
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
 
   <!-- Enhanced Footer -->
   <footer class="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-900 dark:to-black relative overflow-hidden">
     <!-- Background decoration -->
-    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-purple-900/10"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5"></div>
     
     <!-- Floating background elements with persistent animations -->
-    <div class="absolute top-10 left-10 w-32 h-32 bg-blue-500/5 rounded-full" style="animation: float 6s ease-in-out infinite;"></div>
-    <div class="absolute bottom-10 right-20 w-24 h-24 bg-purple-500/5 rounded-full" style="animation: float 6s ease-in-out infinite; animation-delay: 2s;"></div>
-    <div class="absolute top-1/2 right-1/4 w-16 h-16 bg-green-500/5 rounded-full" style="animation: float 6s ease-in-out infinite; animation-delay: 4s;"></div>
+    <div class="absolute top-10 left-10 w-32 h-32 bg-primary/5 rounded-full" style="animation: float 6s ease-in-out infinite;"></div>
+    <div class="absolute bottom-10 right-20 w-24 h-24 bg-accent/5 rounded-full" style="animation: float 6s ease-in-out infinite; animation-delay: 2s;"></div>
+    <div class="absolute top-1/2 right-1/4 w-16 h-16 bg-primary-light/5 rounded-full" style="animation: float 6s ease-in-out infinite; animation-delay: 4s;"></div>
     
     <!-- Additional floating elements for more dynamic effect -->
-    <div class="absolute top-1/4 left-1/3 w-20 h-20 bg-yellow-500/3 rounded-full" style="animation: float 8s ease-in-out infinite; animation-delay: 1s;"></div>
-    <div class="absolute bottom-1/4 left-1/4 w-14 h-14 bg-pink-500/3 rounded-full" style="animation: float 7s ease-in-out infinite; animation-delay: 3s;"></div>
+    <div class="absolute top-1/4 left-1/3 w-20 h-20 bg-accent-hover/3 rounded-full" style="animation: float 8s ease-in-out infinite; animation-delay: 1s;"></div>
+    <div class="absolute bottom-1/4 left-1/4 w-14 h-14 bg-primary/3 rounded-full" style="animation: float 7s ease-in-out infinite; animation-delay: 3s;"></div>
     
     <style>
       @keyframes float {
@@ -95,24 +334,24 @@
       }
       
       .gradient-text {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #1D4ED8 0%, #06B6D4 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
       }
     </style>
     
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+    <div class="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-16 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-8 mb-12">
         <!-- Brand Section -->
-        <div class="col-span-1 md:col-span-2 animate-on-scroll">
+        <div class="col-span-1 md:col-span-2 lg:col-span-2 xl:col-span-3 2xl:col-span-4 animate-on-scroll">
           <div class="flex items-center mb-6">
-            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 shadow-lg animate-bounce-gentle">
+            <div class="w-12 h-12 bg-gradient-to-r from-primary to-accent rounded-xl flex items-center justify-center mr-4 shadow-lg animate-bounce-gentle">
               <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
               </svg>
             </div>
-            <span class="text-2xl font-bold text-white">CampusFound</span>
+            <span class="text-2xl font-bold text-white">LOAF</span>
           </div>
           <p class="text-gray-300 mb-6 text-lg leading-relaxed max-w-md">
             Making campus recovery faster and easier with AI-powered matching. 
@@ -210,7 +449,7 @@
         <div class="flex flex-col md:flex-row justify-between items-center">
           <div class="flex items-center mb-4 md:mb-0">
             <p class="text-gray-400 text-sm">
-              &copy; 2025 CampusFound. All rights reserved.
+              &copy; 2025 LOAF. All rights reserved.
             </p>
             <div class="ml-4 flex items-center">
               <span class="text-gray-500 text-xs">Made with</span>

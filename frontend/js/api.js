@@ -3,15 +3,20 @@
 
   function getTokens() {
     try {
-      return JSON.parse(localStorage.getItem("tokens") || "{}");
+      const tokens = JSON.parse(localStorage.getItem("tokens") || "{}");
+      console.log('API: Getting tokens:', { access: !!tokens.access, refresh: !!tokens.refresh });
+      return tokens;
     } catch {
+      console.log('API: Error parsing tokens, returning empty object');
       return {};
     }
   }
   function setTokens(tokens) {
+    console.log('API: Setting tokens:', { access: !!tokens?.access, refresh: !!tokens?.refresh });
     localStorage.setItem("tokens", JSON.stringify(tokens || {}));
   }
   function clearTokens() {
+    console.log('API: Clearing tokens');
     localStorage.removeItem("tokens");
   }
 
@@ -40,33 +45,53 @@
     (r) => r,
     async (error) => {
       const original = error.config;
+      console.log('API: Response interceptor - Status:', error.response?.status, 'URL:', original?.url);
+      
       if (error.response && error.response.status === 401 && !original._retry) {
         original._retry = true;
         const { refresh } = getTokens();
+        console.log('API: 401 error, attempting token refresh. Has refresh token:', !!refresh);
+        
         if (!refresh) {
+          console.log('API: No refresh token available, clearing tokens');
           clearTokens();
           return Promise.reject(error);
         }
+        
         if (refreshing) {
+          console.log('API: Already refreshing, queuing request');
           return new Promise((resolve, reject) =>
             queue.push({ resolve, reject })
           );
         }
+        
         refreshing = true;
         try {
+          console.log('API: Attempting token refresh');
           const res = await axios.post(BASE_URL + "auth/token/refresh/", {
             refresh,
           });
+          console.log('API: Token refresh successful');
+          
           const tokens = getTokens();
           tokens.access = res.data.access;
           setTokens(tokens);
+          
           queue.forEach((p) => p.resolve());
           queue = [];
+          
+          console.log('API: Retrying original request with new token');
           return instance(original);
         } catch (e) {
+          console.error('API: Token refresh failed:', e.response?.status, e.response?.data);
           queue.forEach((p) => p.reject(e));
           queue = [];
-          clearTokens();
+          
+          // Only clear tokens if refresh actually failed (not network errors)
+          if (e.response?.status === 401) {
+            console.log('API: Refresh token invalid, clearing all tokens');
+            clearTokens();
+          }
           return Promise.reject(e);
         } finally {
           refreshing = false;
@@ -77,8 +102,16 @@
   );
 
   async function login(username, password) {
+    console.log('API: Attempting login for username:', username);
     const { data } = await instance.post("auth/token/", { username, password });
+    console.log('API: Login successful, setting tokens');
+    console.log('API: Tokens received:', { access: !!data.access, refresh: !!data.refresh });
     setTokens({ access: data.access, refresh: data.refresh });
+    
+    // Verify tokens were stored
+    const storedTokens = getTokens();
+    console.log('API: Tokens stored successfully:', { access: !!storedTokens.access, refresh: !!storedTokens.refresh });
+    
     return data;
   }
 
@@ -110,7 +143,9 @@
     auth: { login, register, adminLogin, logout },
     users: {
       async me() {
+        console.log('API: Attempting to get user info');
         const { data } = await instance.get("users/me/");
+        console.log('API: User info retrieved:', data);
         return data;
       },
       async update(formData) {
@@ -221,6 +256,36 @@
       },
       async markRead(id) {
         const { data } = await instance.post(`notifications/${id}/mark-read/`);
+        return data;
+      },
+    },
+    dashboard: {
+      async stats() {
+        const { data } = await instance.get("dashboard/stats/");
+        return data;
+      },
+      async reports() {
+        const { data } = await instance.get("dashboard/reports/");
+        return data;
+      },
+      async matches() {
+        const { data } = await instance.get("dashboard/matches/");
+        return data;
+      },
+      async notifications() {
+        const { data } = await instance.get("dashboard/notifications/");
+        return data;
+      },
+      async markNotificationRead(id) {
+        const { data } = await instance.post(`dashboard/notifications/${id}/read/`);
+        return data;
+      },
+      async confirmMatch(id) {
+        const { data } = await instance.post(`dashboard/matches/${id}/confirm/`);
+        return data;
+      },
+      async rejectMatch(id) {
+        const { data } = await instance.post(`dashboard/matches/${id}/reject/`);
         return data;
       },
     },

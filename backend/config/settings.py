@@ -120,7 +120,7 @@ MATCHING_WEIGHTS = {
 
 # CORS (dev)
 # For Live Server origins like http://127.0.0.1:5500 or http://localhost:5500
-CORS_ALLOW_ALL_ORIGINS = True  # Dev convenience; tighten in prod
+CORS_ALLOW_ALL_ORIGINS = True  # Dev convenience;
 # Alternatively, specify explicit origins:
 # CORS_ALLOWED_ORIGINS = [
 #     "http://127.0.0.1:5500",

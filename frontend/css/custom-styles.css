@@ -1,43 +1,78 @@
-/* CampusFound Design System */
+/* CampusFound Design System - Professional Color Scheme */
 /* Custom CSS Variables for Theme */
 :root {
-  /* Light theme colors */
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
+  /* Primary Colors - Deep Blue Range */
+  --color-primary: #1D4ED8;
+  --color-primary-hover: #0A47A3;
+  --color-primary-light: #3B82F6;
+  
+  /* Secondary Colors - Light Grayish Blue */
   --color-secondary: #64748b;
-  --color-accent: #10b981;
-  --color-background: #f8fafc;
-  --color-surface: #ffffff;
+  --color-background: #F8FAFC;
+  --color-background-alt: #EFF6FF;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #E0F2FE;
+  
+  /* Text Colors */
   --color-text-primary: #1e293b;
   --color-text-secondary: #64748b;
-  --color-border: #e2e8f0;
+  
+  /* Accent Colors - Teal/Cyan */
+  --color-accent: #06B6D4;
+  --color-accent-hover: #0EA5E9;
+  
+  /* Border Colors */
+  --color-border: #E2E8F0;
+  --color-border-light: #F1F5F9;
+  
+  /* Status Colors */
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
   
-  /* Gradients */
-  --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* Gradients - Light Blue Gradient */
+  --gradient-hero: linear-gradient(135deg, #1E40AF 0%, #06B6D4 100%);
   --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  --gradient-button: linear-gradient(135deg, #1D4ED8 0%, #06B6D4 100%);
+  --gradient-accent: linear-gradient(135deg, #06B6D4 0%, #0EA5E9 100%);
 }
 
-/* Dark theme colors */
+/* Dark theme colors - Professional Scheme */
 .dark {
-  --color-primary: #3b82f6;
-  --color-primary-hover: #2563eb;
+  /* Primary Colors - Adjusted for dark mode */
+  --color-primary: #3B82F6;
+  --color-primary-hover: #1D4ED8;
+  --color-primary-light: #60A5FA;
+  
+  /* Secondary Colors - Dark backgrounds */
   --color-secondary: #94a3b8;
-  --color-accent: #34d399;
   --color-background: #0f172a;
+  --color-background-alt: #1e293b;
   --color-surface: #1e293b;
+  --color-surface-alt: #334155;
+  
+  /* Text Colors */
   --color-text-primary: #f1f5f9;
   --color-text-secondary: #94a3b8;
+  
+  /* Accent Colors - Teal/Cyan for dark mode */
+  --color-accent: #22D3EE;
+  --color-accent-hover: #06B6D4;
+  
+  /* Border Colors */
   --color-border: #334155;
+  --color-border-light: #475569;
+  
+  /* Status Colors */
   --color-success: #34d399;
   --color-warning: #fbbf24;
   --color-error: #f87171;
   
   /* Dark gradients */
-  --gradient-hero: linear-gradient(135deg, #1e293b 0%, #7c3aed 100%);
+  --gradient-hero: linear-gradient(135deg, #1e293b 0%, #06B6D4 100%);
   --gradient-card: linear-gradient(145deg, #1e293b 0%, #334155 100%);
+  --gradient-button: linear-gradient(135deg, #3B82F6 0%, #22D3EE 100%);
+  --gradient-accent: linear-gradient(135deg, #22D3EE 0%, #06B6D4 100%);
 }
 
 /* Base styles */
@@ -47,10 +82,15 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Custom component classes - without @apply */
+/* Custom component classes - Professional Color Scheme */
 .card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
+}
+
+.card-alt {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border-light);
 }
 
 .input-field {
@@ -61,11 +101,69 @@ body {
 
 .nav-link {
   color: var(--color-text-secondary);
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--color-primary);
+}
+
+/* Button styles */
+.btn-primary {
+  background: var(--gradient-button);
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-accent {
+  background: var(--gradient-accent);
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.btn-accent:hover {
+  background: var(--color-accent-hover);
 }
 
 /* Hero section styles */
 .hero-gradient {
   background: var(--gradient-hero);
+}
+
+/* Background variations */
+.bg-professional {
+  background: var(--color-background);
+}
+
+.bg-professional-alt {
+  background: var(--color-background-alt);
+}
+
+/* Text color utilities */
+.text-professional-primary {
+  color: var(--color-text-primary);
+}
+
+.text-professional-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+/* Border utilities */
+.border-professional {
+  border-color: var(--color-border);
+}
+
+.border-professional-light {
+  border-color: var(--color-border-light);
 }
 
 /* Animation keyframes */

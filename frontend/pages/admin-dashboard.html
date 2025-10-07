@@ -6,6 +6,35 @@
   <title>Admin Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="../css/custom-styles.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#1D4ED8',
+              hover: '#0A47A3',
+              light: '#3B82F6'
+            },
+            secondary: '#64748b',
+            accent: {
+              DEFAULT: '#06B6D4',
+              hover: '#0EA5E9'
+            },
+            surface: {
+              DEFAULT: '#FFFFFF',
+              alt: '#E0F2FE'
+            },
+            background: {
+              DEFAULT: '#F8FAFC',
+              alt: '#EFF6FF'
+            }
+          }
+        }
+      }
+    }
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="min-h-screen bg-gray-50">

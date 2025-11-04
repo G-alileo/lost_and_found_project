@@ -1,7 +1,5 @@
 from __future__ import annotations
-
 from rest_framework import serializers
-
 from .models import Match
 from reports.serializers import ReportSerializer
 

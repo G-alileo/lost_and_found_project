@@ -1,7 +1,5 @@
 from __future__ import annotations
-
 from django.db import models
-
 from reports.models import Report
 
 
@@ -18,7 +16,7 @@ class Match(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     resolved_at = models.DateTimeField(null=True, blank=True)
 
-    def __str__(self) -> str:  # pragma: no cover
+    def __str__(self) -> str: 
         return f"Match {self.pk} ({self.confidence_score:.2f})"
 
 

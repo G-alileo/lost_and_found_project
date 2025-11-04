@@ -1,11 +1,8 @@
 from __future__ import annotations
-
 import re
 from datetime import timedelta
 from typing import Iterable
-
 from django.conf import settings
-
 from matches.models import Match
 from notifications.models import Notification
 from reports.models import Report

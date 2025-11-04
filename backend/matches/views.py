@@ -1,8 +1,6 @@
 from __future__ import annotations
-
 from django.utils import timezone
 from rest_framework import permissions, response, viewsets, decorators
-
 from users.permissions import IsAdminOrReadOnly
 from .models import Match
 from .serializers import MatchDetailSerializer, MatchSerializer
@@ -31,7 +29,6 @@ class MatchViewSet(viewsets.ReadOnlyModelViewSet):
         match.status = Match.Status.CONFIRMED
         match.resolved_at = timezone.now()
         match.save(update_fields=["status", "resolved_at"])
-        # updating reports' statuses will be implemented in service layer
         return response.Response({"status": match.status})
 
     @decorators.action(detail=True, methods=["post"], permission_classes=[IsAdminOrReadOnly])

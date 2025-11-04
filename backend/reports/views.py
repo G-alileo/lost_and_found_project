@@ -1,8 +1,6 @@
 from __future__ import annotations
-
 from django.db.models import Q
 from rest_framework import permissions, viewsets, decorators, response
-
 from users.permissions import IsOwnerOrAdmin
 from .models import Report
 from .serializers import ReportListSerializer, ReportSerializer
@@ -25,7 +23,6 @@ class ReportViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         instance = serializer.save(reported_by=self.request.user)
-        # matching trigger will be via signal; placeholder if needed
         return instance
 
     def get_queryset(self):
@@ -46,7 +43,6 @@ class ReportViewSet(viewsets.ModelViewSet):
 
     @decorators.action(detail=True, methods=["post"], permission_classes=[permissions.IsAuthenticated])
     def find_matches(self, request, pk=None):
-        # Placeholder: actual matching will run; return 202 Accepted
         return response.Response({"triggered": True})
 
 

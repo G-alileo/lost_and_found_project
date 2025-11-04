@@ -1,8 +1,6 @@
 from __future__ import annotations
-
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
 from matches.services import run_matching_for_report
 from .models import Report
 

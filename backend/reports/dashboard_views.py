@@ -1,10 +1,8 @@
 from __future__ import annotations
-
 from django.db.models import Count, Q
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-
 from matches.models import Match
 from notifications.models import Notification
 from .models import Report
@@ -13,9 +11,7 @@ from .models import Report
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def dashboard_stats(request):
-    """
-    Get dashboard statistics for the current user
-    """
+    # Get dashboard statistics for the current user
     user = request.user
     
     # Get user's reports
@@ -51,9 +47,7 @@ def dashboard_stats(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def user_reports(request):
-    """
-    Get current user's reports
-    """
+    # Get current user's reports
     user = request.user
     reports = Report.objects.filter(reported_by=user).order_by('-created_at')
     
@@ -81,9 +75,7 @@ def user_reports(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def user_matches(request):
-    """
-    Get matches for current user's reports
-    """
+    # Get matches for current user's reports
     user = request.user
     matches = Match.objects.filter(
         Q(lost_report__reported_by=user) | Q(found_report__reported_by=user)
@@ -125,9 +117,7 @@ def user_matches(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def user_notifications(request):
-    """
-    Get notifications for current user
-    """
+    # Get notifications for current user
     user = request.user
     notifications = Notification.objects.filter(user=user).order_by('-created_at')
     
@@ -165,9 +155,7 @@ def mark_notification_read(request, notification_id):
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def confirm_match(request, match_id):
-    """
-    Confirm a match
-    """
+    # Confirm a match
     try:
         match = Match.objects.get(
             id=match_id,
@@ -197,9 +185,7 @@ def confirm_match(request, match_id):
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def reject_match(request, match_id):
-    """
-    Reject a match
-    """
+    # Reject a match
     try:
         match = Match.objects.get(
             id=match_id,

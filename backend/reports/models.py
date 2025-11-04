@@ -1,8 +1,6 @@
 from __future__ import annotations
-
 from django.conf import settings
 from django.db import models
-
 from items.models import Category
 
 
@@ -29,7 +27,7 @@ class Report(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self) -> str:  # pragma: no cover
+    def __str__(self) -> str:  
         return f"{self.report_type}: {self.title}"
 
 

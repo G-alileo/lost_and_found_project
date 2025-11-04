@@ -13,7 +13,7 @@ class Notification(models.Model):
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self) -> str:  # pragma: no cover
+    def __str__(self) -> str: 
         return f"Notif to {self.user_id}: {self.message[:30]}"
 
 

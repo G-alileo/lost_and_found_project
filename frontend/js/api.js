@@ -193,6 +193,13 @@
         return data;
       },
     },
+    subcategories: {
+      async list(params) {
+        // params can include { category: id }
+        const { data } = await instance.get("subcategories/", { params });
+        return data;
+      },
+    },
     reports: {
       async list(params) {
         const { data } = await instance.get("reports/", { params });

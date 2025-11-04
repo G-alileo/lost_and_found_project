@@ -15,7 +15,7 @@ class User(AbstractUser):
     profile_picture = models.ImageField(upload_to="users/", null=True, blank=True)
     bio = models.TextField(max_length=500, blank=True, null=True)
 
-    def __str__(self) -> str:  # pragma: no cover
+    def __str__(self) -> str:  
         return self.username
 
 

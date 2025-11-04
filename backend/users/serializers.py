@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
@@ -57,6 +59,8 @@ class ChangePasswordSerializer(serializers.Serializer):
     
     def validate_new_password(self, value):
         # Add password validation if needed
+        if not re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", value):
+            raise serializers.ValidationError("Password must contain at least 8 characters, including uppercase, lowercase, digits, and special characters.")
         return value
 
 

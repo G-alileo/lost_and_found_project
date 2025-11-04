@@ -1,10 +1,8 @@
 from __future__ import annotations
-
 from django.db.models import Count
 from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 from matches.models import Match
 from reports.models import Report
 

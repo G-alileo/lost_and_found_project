@@ -13,6 +13,7 @@ urlpatterns = [
     path("api/", include("chatbot.urls")),
     path("api/", include("image_recognition.urls")),
     path("api/admin/", include("adminpanel.urls")),
+    path("api/chat/", include("chat.urls")),
 ]
 
 if settings.DEBUG:

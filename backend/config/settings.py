@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "chatbot",
     "image_recognition",
     "adminpanel",
+    "chat",
 ]
 
 MIDDLEWARE = [

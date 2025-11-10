@@ -304,5 +304,47 @@
         return data;
       },
     },
+    chat: {
+      async getConversations() {
+        const { data } = await instance.get("chat/conversations/");
+        return data;
+      },
+      async createConversation(lostReportId, foundReportId) {
+        const { data } = await instance.post("chat/conversations/", {
+          lost_report_id: lostReportId,
+          found_report_id: foundReportId,
+        });
+        return data;
+      },
+      async createConversationFromReport(reportId) {
+        const { data } = await instance.post("chat/conversations/", {
+          report_id: reportId,
+        });
+        return data;
+      },
+      async getConversation(conversationId) {
+        const { data } = await instance.get(`chat/conversations/${conversationId}/`);
+        return data;
+      },
+      async getMessages(conversationId) {
+        const { data } = await instance.get(`chat/conversations/${conversationId}/messages/`);
+        return data;
+      },
+      async sendMessage(conversationId, content) {
+        const { data } = await instance.post(
+          `chat/conversations/${conversationId}/send_message/`,
+          { content }
+        );
+        return data;
+      },
+      async getUnreadCount() {
+        const { data } = await instance.get("chat/conversations/unread_count/");
+        return data.unread_count;
+      },
+      async markMessageRead(messageId) {
+        const { data } = await instance.post(`chat/messages/${messageId}/mark_read/`);
+        return data;
+      },
+    },
   };
 })();

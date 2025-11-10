@@ -37,22 +37,10 @@ class ConversationViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
-        # Check if conversation already exists
-        lost_report_id = serializer.validated_data['lost_report'].id
-        found_report_id = serializer.validated_data['found_report'].id
-        
-        existing = Conversation.objects.filter(
-            lost_report_id=lost_report_id,
-            found_report_id=found_report_id
-        ).first()
-        
-        if existing:
-            # Return existing conversation
-            response_serializer = ConversationSerializer(existing, context={'request': request})
-            return Response(response_serializer.data, status=status.HTTP_200_OK)
-        
-        # Create new conversation
+        # The serializer's create method handles duplicate checking
+        # and supports both single-item and matched conversations
         self.perform_create(serializer)
+        
         response_serializer = ConversationSerializer(
             serializer.instance, 
             context={'request': request}

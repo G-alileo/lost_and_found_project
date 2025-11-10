@@ -838,8 +838,13 @@
 
     // Initialize dashboard
     document.addEventListener('DOMContentLoaded', async () => {
-      await checkAuthAndLoadUser();
-      await loadDashboardData();
+      try {
+        await checkAuthAndLoadUser();
+        await loadDashboardData();
+      } catch (error) {
+        console.error('Dashboard initialization error:', error);
+        // Don't show alert here, it's handled in checkAuthAndLoadUser
+      }
     });
 
     // Check authentication and load user data
@@ -900,9 +905,10 @@
             }
           }
         } else {
-          // For other errors, just show an error message
-          console.log('Dashboard: Non-auth error, showing error message');
-          alert('Failed to load dashboard. Please check your connection and try again.');
+          // For other errors, log and show a user-friendly message
+          console.log('Dashboard: Non-auth error');
+          console.error('Error details:', error);
+          // Don't throw error, just log it - dashboard data loading will handle its own errors
         }
       }
     }
@@ -969,18 +975,51 @@
       try {
         const stats = await window.api.dashboard.stats();
         
-        // Update stats cards
-        document.getElementById('totalReports').textContent = stats.total_reports;
-        document.getElementById('activeMatches').textContent = stats.active_matches;
-        document.getElementById('resolvedItems').textContent = stats.resolved_items;
-        document.getElementById('notificationCount').textContent = stats.notifications;
+        // Get unread message count from chat
+        let unreadMessages = 0;
+        try {
+          const chatUnread = await window.api.chat.getUnreadCount();
+          unreadMessages = chatUnread.unread_count || 0;
+        } catch (chatError) {
+          console.error('Failed to load chat unread count:', chatError);
+        }
+        
+        // Update stats cards with null checks
+        const totalReportsEl = document.getElementById('totalReports');
+        const activeMatchesEl = document.getElementById('activeMatches');
+        const resolvedItemsEl = document.getElementById('resolvedItems');
+        const notificationCountEl = document.getElementById('notificationCount');
+        
+        if (totalReportsEl) totalReportsEl.textContent = stats.total_reports;
+        if (activeMatchesEl) activeMatchesEl.textContent = stats.active_matches;
+        if (resolvedItemsEl) resolvedItemsEl.textContent = stats.resolved_items;
+        
+        // Combine notifications and unread messages
+        const totalNotifications = (stats.notifications || 0) + unreadMessages;
+        if (notificationCountEl) notificationCountEl.textContent = totalNotifications;
+        
+        // Update badge title
+        if (notificationCountEl && unreadMessages > 0) {
+          const notificationCard = notificationCountEl.closest('.card');
+          if (notificationCard) {
+            const titleEl = notificationCard.querySelector('h3');
+            if (titleEl) {
+              titleEl.textContent = `Alerts (${unreadMessages} unread messages)`;
+            }
+          }
+        }
       } catch (error) {
         console.error('Failed to load dashboard stats:', error);
-        // Set default values on error
-        document.getElementById('totalReports').textContent = '0';
-        document.getElementById('activeMatches').textContent = '0';
-        document.getElementById('resolvedItems').textContent = '0';
-        document.getElementById('notificationCount').textContent = '0';
+        // Set default values on error with null checks
+        const totalReportsEl = document.getElementById('totalReports');
+        const activeMatchesEl = document.getElementById('activeMatches');
+        const resolvedItemsEl = document.getElementById('resolvedItems');
+        const notificationCountEl = document.getElementById('notificationCount');
+        
+        if (totalReportsEl) totalReportsEl.textContent = '0';
+        if (activeMatchesEl) activeMatchesEl.textContent = '0';
+        if (resolvedItemsEl) resolvedItemsEl.textContent = '0';
+        if (notificationCountEl) notificationCountEl.textContent = '0';
       }
     }
 
@@ -1020,6 +1059,10 @@
     // Render reports table
     function renderReportsTable(reports) {
       const tbody = document.getElementById('reportsTableBody');
+      if (!tbody) {
+        console.warn('Reports table body not found');
+        return;
+      }
       
       if (reports.length === 0) {
         tbody.innerHTML = `
@@ -1202,6 +1245,10 @@
     // Render notifications
     function renderNotifications(notifications) {
       const container = document.getElementById('notificationsList');
+      if (!container) {
+        console.warn('Notifications container not found');
+        return;
+      }
       
       if (notifications.length === 0) {
         container.innerHTML = `
@@ -1234,7 +1281,12 @@
 
     // Show notifications error
     function showNotificationsError() {
-      document.getElementById('notificationsList').innerHTML = `
+      const container = document.getElementById('notificationsList');
+      if (!container) {
+        console.warn('Notifications container not found');
+        return;
+      }
+      container.innerHTML = `
         <div class="text-center text-red-400 py-8">
           <p>Failed to load notifications. Please try again.</p>
           <button onclick="loadNotifications()" class="btn-primary mt-4">Retry</button>
@@ -1245,6 +1297,10 @@
     // Update notification badge
     function updateNotificationBadge(count) {
       const badge = document.getElementById('notificationBadge');
+      if (!badge) {
+        console.warn('Notification badge element not found');
+        return;
+      }
       if (count > 0) {
         badge.textContent = count;
         badge.classList.remove('hidden');

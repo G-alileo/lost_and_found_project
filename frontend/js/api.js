@@ -339,7 +339,7 @@
       },
       async getUnreadCount() {
         const { data } = await instance.get("chat/conversations/unread_count/");
-        return data.unread_count;
+        return data;
       },
       async markMessageRead(messageId) {
         const { data } = await instance.post(`chat/messages/${messageId}/mark_read/`);

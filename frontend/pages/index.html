@@ -205,10 +205,10 @@
   </style>
 </head>
 <body class="min-h-screen transition-colors duration-300 flex flex-col">
-  <!-- Simplified Header with Logo Only -->
-  <header class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-700/50">
+  <!-- Enhanced Header with Navigation -->
+  <header class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-700/50 sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-center items-center h-16">
+      <div class="flex justify-between items-center h-16">
         <!-- Logo -->
         <div class="flex items-center">
           <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-3">
@@ -218,6 +218,45 @@
           </div>
           <span class="text-xl font-bold text-gray-900 dark:text-white">LOAF</span>
         </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#home" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light font-medium transition-colors smooth-scroll">Home</a>
+          <a href="#features" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light font-medium transition-colors smooth-scroll">Features</a>
+          <a href="#how-it-works" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light font-medium transition-colors smooth-scroll">How It Works</a>
+          <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light font-medium transition-colors smooth-scroll">About</a>
+          <a href="#contact" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light font-medium transition-colors smooth-scroll">Contact</a>
+        </nav>
+
+        <!-- CTA Buttons -->
+        <div class="hidden md:flex items-center space-x-4">
+          <a href="./login.html" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light font-medium transition-colors">Login</a>
+          <a href="./register.html" class="bg-gradient-to-r from-primary to-accent hover:from-primary-hover hover:to-accent-hover text-white px-6 py-2 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200">
+            Sign Up
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <svg class="w-6 h-6 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden md:hidden pb-4">
+        <nav class="flex flex-col space-y-3">
+          <a href="#home" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light font-medium transition-colors smooth-scroll py-2">Home</a>
+          <a href="#features" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light font-medium transition-colors smooth-scroll py-2">Features</a>
+          <a href="#how-it-works" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light font-medium transition-colors smooth-scroll py-2">How It Works</a>
+          <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light font-medium transition-colors smooth-scroll py-2">About</a>
+          <a href="#contact" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light font-medium transition-colors smooth-scroll py-2">Contact</a>
+          <div class="flex flex-col space-y-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+            <a href="./login.html" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light font-medium transition-colors py-2">Login</a>
+            <a href="./register.html" class="bg-gradient-to-r from-primary to-accent text-white px-6 py-2 rounded-lg font-semibold text-center">Sign Up</a>
+          </div>
+        </nav>
       </div>
     </div>
   </header>
@@ -365,7 +404,7 @@
 
   <!-- Hero Section -->
   <main class="flex-grow">
-    <section class="relative min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 overflow-hidden flex items-center">
+    <section id="home" class="relative min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 overflow-hidden flex items-center">
       <!-- Animated background particles -->
       <div class="absolute inset-0 overflow-hidden pointer-events-none">
         <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
@@ -489,7 +528,7 @@
     </section>
 
     <!-- Enhanced Stats Section -->
-    <section class="py-20 bg-gradient-to-r from-background to-background-alt dark:from-gray-900 dark:to-gray-800">
+    <section id="features" class="py-20 bg-gradient-to-r from-background to-background-alt dark:from-gray-900 dark:to-gray-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12 animate-on-scroll">
           <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
@@ -691,6 +730,52 @@
         
         <div class="text-center">
           <a href="./browse.html" class="btn-secondary">View All Items</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white dark:bg-gray-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 animate-on-scroll">
+          <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">
+            About <span class="gradient-text">LOAF</span>
+          </h2>
+          <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Lost and Found - Artificial Intelligence is revolutionizing how students recover their lost belongings on campus.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div class="animate-on-scroll">
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Our Mission</h3>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+              At LOAF, we believe that losing an item shouldn't mean losing hope. Our AI-powered platform connects students with their lost belongings faster and more efficiently than ever before.
+            </p>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">How We Help</h3>
+            <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+              Using advanced machine learning algorithms, we automatically match lost and found reports based on descriptions, locations, and time frames. Our smart notification system ensures you never miss a potential match.
+            </p>
+          </div>
+          
+          <div class="animate-on-scroll grid grid-cols-2 gap-6">
+            <div class="bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20 p-6 rounded-2xl">
+              <div class="text-4xl font-bold text-primary dark:text-primary-light mb-2">95%</div>
+              <div class="text-sm font-semibold text-gray-700 dark:text-gray-300">Match Accuracy</div>
+            </div>
+            <div class="bg-gradient-to-br from-accent/10 to-primary/10 dark:from-accent/20 dark:to-primary/20 p-6 rounded-2xl">
+              <div class="text-4xl font-bold text-accent dark:text-accent-hover mb-2">< 24h</div>
+              <div class="text-sm font-semibold text-gray-700 dark:text-gray-300">Avg Response Time</div>
+            </div>
+            <div class="bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20 p-6 rounded-2xl">
+              <div class="text-4xl font-bold text-primary dark:text-primary-light mb-2">24/7</div>
+              <div class="text-sm font-semibold text-gray-700 dark:text-gray-300">Always Available</div>
+            </div>
+            <div class="bg-gradient-to-br from-accent/10 to-primary/10 dark:from-accent/20 dark:to-primary/20 p-6 rounded-2xl">
+              <div class="text-4xl font-bold text-accent dark:text-accent-hover mb-2">100%</div>
+              <div class="text-sm font-semibold text-gray-700 dark:text-gray-300">Free to Use</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1588,6 +1673,71 @@
         window.location.href = './login.html?returnTo=report-found.html';
       }
     }
+
+    // Mobile menu toggle
+    document.getElementById('mobileMenuBtn')?.addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobileMenu');
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('#mobileMenu a').forEach(link => {
+      link.addEventListener('click', function() {
+        document.getElementById('mobileMenu').classList.add('hidden');
+      });
+    });
+
+    // Smooth scrolling for all navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        
+        // Skip if it's just "#" or empty
+        if (!href || href === '#') return;
+        
+        e.preventDefault();
+        
+        const targetId = href.substring(1);
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          // Calculate offset to account for sticky header
+          const headerHeight = 64; // Height of your header
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Highlight active section in navigation
+    window.addEventListener('scroll', function() {
+      const sections = ['home', 'features', 'how-it-works', 'about', 'contact'];
+      const scrollPosition = window.scrollY + 100;
+
+      sections.forEach(sectionId => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const sectionTop = section.offsetTop;
+          const sectionBottom = sectionTop + section.offsetHeight;
+
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            // Remove active class from all links
+            document.querySelectorAll(`nav a[href="#${sectionId}"]`).forEach(link => {
+              // Remove active from all
+              document.querySelectorAll('nav a').forEach(l => {
+                l.classList.remove('text-primary', 'dark:text-primary-light');
+              });
+              // Add active to current
+              link.classList.add('text-primary', 'dark:text-primary-light');
+            });
+          }
+        }
+      });
+    });
   </script>
 </body>
 </html>

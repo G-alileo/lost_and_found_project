@@ -28,14 +28,33 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, min_length=6)
+    password2 = serializers.CharField(write_only=True, min_length=6, required=False)
 
     class Meta:
         model = User
-        fields = ["username", "email", "password", "first_name", "last_name", "role"]
+        fields = ["username", "email", "password", "password2", "first_name", "last_name", "role"]
+        extra_kwargs = {
+            'first_name': {'required': False},
+            'last_name': {'required': False},
+            'role': {'required': False}
+        }
+
+    def validate(self, attrs):
+        """Validate password confirmation if provided"""
+        password = attrs.get('password')
+        password2 = attrs.pop('password2', None)
+        
+        if password2 and password != password2:
+            raise serializers.ValidationError({"password": "Passwords do not match"})
+        
+        return attrs
 
     def create(self, validated_data):
         password = validated_data.pop("password")
+        # Set default role if not provided
+        if 'role' not in validated_data:
+            validated_data['role'] = 'user'
         user = User(**validated_data)
         user.set_password(password)
         user.save()

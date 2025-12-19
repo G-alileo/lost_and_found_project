@@ -31,6 +31,11 @@ class ReportViewSet(viewsets.ModelViewSet):
         category = self.request.query_params.get("category")
         status_param = self.request.query_params.get("status")
         q = self.request.query_params.get("q")
+        
+        # Date range filtering
+        date_from = self.request.query_params.get("created_at__date__gte")
+        date_to = self.request.query_params.get("created_at__date__lte")
+        
         if report_type in {"lost", "found"}:
             qs = qs.filter(report_type=report_type)
         if category:
@@ -39,6 +44,13 @@ class ReportViewSet(viewsets.ModelViewSet):
             qs = qs.filter(status=status_param)
         if q:
             qs = qs.filter(Q(title__icontains=q) | Q(description__icontains=q) | Q(location__icontains=q))
+        
+        # Apply date range filters
+        if date_from:
+            qs = qs.filter(created_at__date__gte=date_from)
+        if date_to:
+            qs = qs.filter(created_at__date__lte=date_to)
+            
         return qs
 
     @decorators.action(detail=True, methods=["post"], permission_classes=[permissions.IsAuthenticated])

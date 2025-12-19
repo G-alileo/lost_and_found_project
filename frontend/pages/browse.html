@@ -376,8 +376,26 @@
         </div>
         
         <!-- Quick Actions -->
-        <div class="flex items-end space-x-3">
-          <button id="applyFiltersBtn" class="flex-1 inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary-hover hover:to-accent-hover text-white font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
+        <div class="flex flex-col items-end space-y-3">
+          <!-- Quick Date Range Buttons -->
+          <div class="flex flex-wrap gap-2 w-full justify-end">
+            <button onclick="setDateRange('today')" class="px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors duration-200">
+              Today
+            </button>
+            <button onclick="setDateRange('week')" class="px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors duration-200">
+              Last 7 Days
+            </button>
+            <button onclick="setDateRange('month')" class="px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors duration-200">
+              Last 30 Days
+            </button>
+            <button onclick="setDateRange('all')" class="px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors duration-200">
+              All Time
+            </button>
+          </div>
+          
+          <!-- Main Action Buttons -->
+          <div class="flex items-end space-x-3 w-full">
+            <button id="applyFiltersBtn" class="flex-1 inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary-hover hover:to-accent-hover text-white font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z"></path>
             </svg>
@@ -686,7 +704,127 @@
         if (e.key === 'Enter') performSearch();
       });
       document.getElementById('sortFilter').addEventListener('change', performSearch);
+      
+      // Date range validation
+      setupDateRangeValidation();
     });
+    
+    // Setup date range validation
+    function setupDateRangeValidation() {
+      const dateFromInput = document.getElementById('dateFromFilter');
+      const dateToInput = document.getElementById('dateToFilter');
+      
+      // When from date changes, update min value of to date
+      dateFromInput.addEventListener('change', () => {
+        if (dateFromInput.value) {
+          dateToInput.min = dateFromInput.value;
+          
+          // If to date is before from date, clear it
+          if (dateToInput.value && dateToInput.value < dateFromInput.value) {
+            dateToInput.value = '';
+            showNotification('End date cannot be before start date', 'warning');
+          }
+        } else {
+          dateToInput.removeAttribute('min');
+        }
+      });
+      
+      // When to date changes, update max value of from date
+      dateToInput.addEventListener('change', () => {
+        if (dateToInput.value) {
+          dateFromInput.max = dateToInput.value;
+          
+          // If from date is after to date, clear it
+          if (dateFromInput.value && dateFromInput.value > dateToInput.value) {
+            dateFromInput.value = '';
+            showNotification('Start date cannot be after end date', 'warning');
+          }
+        } else {
+          dateFromInput.removeAttribute('max');
+        }
+      });
+    }
+    
+    // Show notification helper
+    function showNotification(message, type = 'info') {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.className = `fixed top-4 right-4 z-50 px-6 py-4 rounded-xl shadow-2xl border transform transition-all duration-300 ease-out ${
+        type === 'warning' ? 'bg-yellow-50 dark:bg-yellow-900/30 border-yellow-200 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200' :
+        type === 'error' ? 'bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-700 text-red-800 dark:text-red-200' :
+        type === 'success' ? 'bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-700 text-green-800 dark:text-green-200' :
+        'bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-700 text-blue-800 dark:text-blue-200'
+      }`;
+      
+      notification.innerHTML = `
+        <div class="flex items-center space-x-3">
+          <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            ${type === 'warning' ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>' :
+            type === 'error' ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>' :
+            type === 'success' ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>' :
+            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>'}
+          </svg>
+          <span class="font-medium">${message}</span>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Animate in
+      setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+      }, 10);
+      
+      // Remove after 3 seconds
+      setTimeout(() => {
+        notification.style.transform = 'translateX(400px)';
+        notification.style.opacity = '0';
+        setTimeout(() => {
+          notification.remove();
+        }, 300);
+      }, 3000);
+    }
+    
+    // Set date range helper function
+    function setDateRange(range) {
+      const today = new Date();
+      const dateFromInput = document.getElementById('dateFromFilter');
+      const dateToInput = document.getElementById('dateToFilter');
+      
+      // Format date as YYYY-MM-DD
+      const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      };
+      
+      switch(range) {
+        case 'today':
+          dateFromInput.value = formatDate(today);
+          dateToInput.value = formatDate(today);
+          break;
+        case 'week':
+          const weekAgo = new Date(today);
+          weekAgo.setDate(today.getDate() - 7);
+          dateFromInput.value = formatDate(weekAgo);
+          dateToInput.value = formatDate(today);
+          break;
+        case 'month':
+          const monthAgo = new Date(today);
+          monthAgo.setDate(today.getDate() - 30);
+          dateFromInput.value = formatDate(monthAgo);
+          dateToInput.value = formatDate(today);
+          break;
+        case 'all':
+          dateFromInput.value = '';
+          dateToInput.value = '';
+          break;
+      }
+      
+      // Auto-apply filters after setting date range
+      performSearch();
+    }
 
     // Check authentication status
     async function checkAuthStatus() {

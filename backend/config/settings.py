@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     "reports",
     "matches",
     "notifications",
-    "chatbot",
+    # "chatbot",
     "image_recognition",
     "adminpanel",
     "chat",

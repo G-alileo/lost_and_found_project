@@ -10,7 +10,6 @@ urlpatterns = [
     path("api/", include("reports.urls")),
     path("api/", include("matches.urls")),
     path("api/", include("notifications.urls")),
-    path("api/", include("chatbot.urls")),
     path("api/", include("image_recognition.urls")),
     path("api/admin/", include("adminpanel.urls")),
     path("api/chat/", include("chat.urls")),
